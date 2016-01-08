@@ -16,7 +16,7 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 
 - Location
 - Desired radius
-- Various desired hiking parameters 
+- Various desired hiking parameters
 - Day (for weather)
 
 ### Technologies
@@ -31,10 +31,13 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 - knex
 - oAuth
 - Weather API
+- Zip code API (https://www.zipcodeapi.com/)
 
 ### Features
 
 - Signup for a user account
 - Create lists to save hikes
 - Save/update/delete hikes from lists
-- Enter location to get hike recommendations
+- Enter location to get hike recommendations within a set radius
+- See extended weather forecast
+- Get linked to wta.org for detailed hike descriptions
