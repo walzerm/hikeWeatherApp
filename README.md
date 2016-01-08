@@ -41,3 +41,10 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 - Enter location to get hike recommendations within a set radius
 - See extended weather forecast
 - Get linked to wta.org for detailed hike descriptions
+
+### Wireframes
+- [Intro Page](https://wireframe.cc/U77zgJ)
+- [Search Page](https://wireframe.cc/qiD9Uj)
+- [User page](https://wireframe.cc/SlbVEB)
+- [Login page](https://wireframe.cc/KQQXIg)
+- [Create account page](https://wireframe.cc/xX5mzG)
