@@ -1,0 +1,23 @@
+{
+  "name": "hiking-weather-app",
+  "version": "1.0.0",
+  "description": "An app to link hikes with weather in WA",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/walzerm/hikeWeatherApp.git"
+  },
+  "author": "Lissa Walzer and Halah Al-Shaikhly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/walzerm/hikeWeatherApp/issues"
+  },
+  "homepage": "https://github.com/walzerm/hikeWeatherApp#readme",
+  "dependencies": {
+    "nightmare": "^2.1.2",
+    "vo": "^1.0.3"
+  }
+}

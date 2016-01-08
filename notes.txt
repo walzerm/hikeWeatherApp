@@ -1,0 +1,34 @@
+POST /hikes/new
+```json
+{
+    name: "(String )The name of a hike",
+    start_lat: "the starting latitude of a hike"
+    start_lng: "the starting longitude of a hike"
+}
+```
+
+/*
+    GET /hikes/new
+    Creates a new hike
+
+    @param: name (string) - the name of a hike
+
+*/
+
+{
+    _id:
+}
+
+ ~~~~~~~~~~~~~~~~
+
+ router.get(/search, fn(){
+     var filter = {};
+
+     if (req.query.type) {
+         filter.type = req.query.type
+     }
+
+     knex('hikes').join('users')
+
+
+ })
