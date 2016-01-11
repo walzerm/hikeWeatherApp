@@ -13,7 +13,7 @@ var passport = require('passport');
 
 
 //require fb passport
-//insert code here
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 // load env
 require('dotenv').load();
@@ -50,11 +50,48 @@ app.use('/', router.index);
 
 // configure passport
 // uncomment code below
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
-// passport code
-// insert code here
+// facebook-passport auth
+
+// serialization
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+//configure
+passport.use(new FacebookStrategy({
+    clientID: process.env['FACEBOOK_APP_ID'],
+    clientSecret: process.env['FACEBOOK_APP_SECRET'],
+    callbackURL: "http://localhost:8000/auth/facebook/callback",
+    enableProof: false
+  },
+  function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      
+      // To keep the example simple, the user's Facebook profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the Facebook account with a user record in your database,
+      // and return that user instead.
+      return done(null, profile);
+    });
+  }
+));
+
+app.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
