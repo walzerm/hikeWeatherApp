@@ -13,45 +13,55 @@
 	color: #A0A9AE;
 }
 
-#table-center, form{
-/*	width: 70%;
-*/	margin: 0 auto !important;
+#table-center{
+
+}
+
+form{
+	width: 40%;
+	margin: 0 auto !important;
 	float: none !important;
 	background: rgba(1,1,1,0.4);
 	color: #EEEFF7;
 }
 
 form{
-	padding: 1%;
+	padding: 10%;
 }
+
+.sign-form{
+	background: url('https://images.unsplash.com/photo-1420582282039-a6d11404cb66?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=9d7c41ec56079e595ca86ee5f8d77362');
+	background-size: cover;
+}
+
 #table-center > tr:hover{
 	background-color: #31353D;
-}
-body{
-	
 }
 
 .fa-cog {
   color: #D07258;
 }
 
-.btn-cog{
-	margin-top: 30%;
-	width: 25%;
-	height: 20%;
-	background: #D07258;
-	border: 0px;
-}
-
-.btn-cog:hover{
-	background: #D07258;
-	border: 0px;
-}
-
 .index-cover{
 	height: 500px;
 	background: url('https://images.unsplash.com/photo-1420582282039-a6d11404cb66?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=9d7c41ec56079e595ca86ee5f8d77362');
 	background-size: cover;
+}
+.index-cover >div > div >.btn-cog{
+	margin-top: 30%;
+	width: 25%;
+	height: 20%;
+	background: #D07258;
+	border: 0px;	
+}
+
+.index-cover > div > div>.btn-cog:hover{
+	background: #D07258;
+	border: 0px;
+}
+.btn-cog{
+	background: #D07258;
+	border: 0px;
 }
 
 .footer {
