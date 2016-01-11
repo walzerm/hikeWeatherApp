@@ -34,7 +34,7 @@ app.use(cookieSession({
 
 // set view engine
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
 
 //set assets folder
 app.use(express.static(path.join(__dirname, 'assets')));
@@ -46,7 +46,7 @@ app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
 // use the router
-app.use('/', router);
+app.use('/', router.index);
 
 // configure passport
 // uncomment code below
