@@ -17,7 +17,19 @@
   },
   "homepage": "https://github.com/walzerm/hikeWeatherApp#readme",
   "dependencies": {
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.14.2",
+    "cookie-parser": "^1.4.1",
+    "cookie-session": "^1.2.0",
+    "dotenv": "^1.2.0",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "knex": "^0.9.0",
+    "locus": "^1.2.0",
+    "method-override": "^2.3.5",
+    "morgan": "^1.6.1",
     "nightmare": "^2.1.2",
+    "pg": "^4.4.3",
     "vo": "^1.0.3"
   }
 }
