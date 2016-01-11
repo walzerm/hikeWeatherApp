@@ -29,7 +29,10 @@
     "method-override": "^2.3.5",
     "morgan": "^1.6.1",
     "nightmare": "^2.1.2",
+    "passport": "^0.3.2",
+    "path": "^0.12.7",
     "pg": "^4.4.3",
+    "serve-favicon": "^2.3.0",
     "vo": "^1.0.3"
   }
 }
