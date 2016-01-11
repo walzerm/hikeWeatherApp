@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/walzerm/hikeWeatherApp#readme",
   "dependencies": {
+    "fs": "0.0.2",
     "nightmare": "^2.1.2",
     "vo": "^1.0.3"
   }

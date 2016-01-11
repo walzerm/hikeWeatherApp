@@ -3,6 +3,7 @@
 
 var Nightmare = require('nightmare');
 var vo = require('vo');
+var fs = require('fs');
 
 vo(run)(function(err, result) {
   if (err) throw err;
@@ -12,28 +13,28 @@ function *run() {
     var selectorOne = 'p';
     var selectorTwo = 'h1'
     var textArr = [];
-    var url = 'http://www.search-seo-engine-optimization.com/';
+    var url = 'https://www.reddit.com/r/all/';
 
     var urlExtensions = {
         0: '',
-        1: 'seattle/pay-per-click-advertising-ppc.html'
+        1: '?count=25&after=t3_40ge4i'
     }
 
     Nightmare.action('elements', function(done) {
         this.evaluate_now(function() {
-            var p = document.getElementsByTagName('p');
-            var h1 = document.getElementsByTagName('h1');
-            strP = []
-            strh1 = [];
-            for (idx in p) {
-                strP.push(p[idx].innerText);
+            var titles = document.getElementsByClassName('title may-blank ');
+            var subreddits = document.getElementsByClassName('subreddit hover may-blank');
+            strTitle = []
+            strSubreddit = [];
+            for (idx in titles) {
+                strTitle.push(titles[idx].innerText);
             }
-            for (idx in h1) {
-                strh1.push(h1[idx].innerText);
+            for (idx1 in subreddits) {
+                strSubreddit.push(subreddits[idx1].innerText);
             }
             return {
-                pElements: strP,
-                h1Elements: strh1
+                titleElements: strTitle,
+                subredditElements: strSubreddit
             }
         }, done)
     })
@@ -49,6 +50,16 @@ function *run() {
         yield nightmare.end();
 
     console.log(textArr);
+    fs.readFile('./hikeData.json', function(err, data) {
+        if (err) {
+            console.log(err);
+        }
+    })
+    fs.writeFile('./hikeData.json', JSON.stringify(textArr), function(err, data) {
+        if (err) {
+            console.log(err);
+        }
+    })
 }
 
 
