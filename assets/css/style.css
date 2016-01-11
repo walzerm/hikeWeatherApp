@@ -27,7 +27,10 @@ form{
 	background-color: #31353D;
 }
 body{
-	background: url('https://images.unsplash.com/photo-1420582282039-a6d11404cb66?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=9d7c41ec56079e595ca86ee5f8d77362');
-	background-size: cover;
+	/*background: url('https://images.unsplash.com/photo-1420582282039-a6d11404cb66?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=9d7c41ec56079e595ca86ee5f8d77362');
+	background-size: cover;*/
 }
 
+.fa-cog {
+  color: #D07258;
+}
