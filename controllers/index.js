@@ -8,4 +8,5 @@ router.get('/', function(req,res, next){
 router.get('/signin', function(req, res, next){
 	res.render('signin/signin');
 });
+
 module.exports = router;
