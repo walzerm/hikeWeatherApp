@@ -57,6 +57,7 @@ app.use(setUserNameLocal)
 
 // use the router
 app.use('/', router.index);
+app.use('/', router.users);
 
 // configure passport
 // uncomment code below
