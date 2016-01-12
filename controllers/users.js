@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var hash = require('bcrypt');
+var validator = require('../src/validator');
 
 // test if user logged in first before routing to
 // user page
@@ -17,19 +18,30 @@ var hash = require('bcrypt');
 
 // sign up
 router.get('/signup', function(req, res){
-	res.render('signup/signup');
+	res.render('signup/signup', {
+		errorMessage:""
+	});
 });
 
-router.post('/user', function(req, res){
-	/* 
-	1 - validate email and passowrd
-	2 - find  user in db
-	3 - if user is in database, display error message
-	4 - else hash password using bcrypt
-	5 - insert user in db
-	6 - redirect to users/id
-	7 - else, display error
-	*/
+router.post('/signup', function(req, res){
+	
+	var errormessages = [];
+    errormessages = validator.error(req.body);
+
+    if(errormessages.length > 0){
+        res.render('signup/signup', {
+        	errorMessage: "Email And password combination is invalid"});
+    }
+    else{
+    	/* 
+		1 - find  user in db
+		2 - if user is in database, display error message
+		3 - else hash password using bcrypt
+		4 - insert user in db
+		5 - redirect to users/id
+		*/
+    	res.send('success');
+    }
 });
 
 // sign in
