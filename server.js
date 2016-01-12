@@ -54,14 +54,12 @@ app.use(setUserNameLocal)
 
 // use the router
 app.use('/', router.index);
-app.use('/', router.users);
+
 // configure passport
-// uncomment code below
 app.use(passport.initialize());
 app.use(passport.session());
 
 // facebook-passport auth
-
 // serialization
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -94,6 +92,7 @@ passport.use(new FacebookStrategy({
 ));
 
 app.use('/auth', router.auth);
+app.use('/', router.users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
