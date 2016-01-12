@@ -1,4 +1,3 @@
-//Practice
 //run with node --harmony hikingNightmare.js
 
 var Nightmare = require('nightmare');
