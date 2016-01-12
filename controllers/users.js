@@ -46,18 +46,31 @@ router.post('/signup', function(req, res){
 
 // sign in
 router.get('/signin', function(req, res, next){
-	res.render('signin/signin');
+	res.render('signin/signin', {
+		errorMessage: ""
+	});
 });
 
-router.post('/user', function(req,res){
-	/* 
-	1 - validate email and passowrd
-	2 - find  user in db
-	3 - if user is in database,
-	4 -  compare the hashed the password using bcrypt
-	5 - redirect to users/id
-	6 - else, display error
-	*/
+router.post('/signin', function(req,res){
+	
+	var errormessages = [];
+    errormessages = validator.error(req.body);
+
+    if(errormessages.length > 0){
+        res.render('signin/signin', {
+        	errorMessage: "Email And password combination is invalid"});
+    }
+    else{
+    	/* 
+		1 - find  user in db
+		2 - if user is in database,
+		3 -  compare the hashed the password using bcrypt
+		4 - redirect to users/id
+		5 - else, display error
+		*/
+		res.send('success');
+
+    }
 });
 
 router.get('/users/:id', function(req, res){
