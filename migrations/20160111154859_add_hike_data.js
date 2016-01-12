@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
         table.string('elevation');
         table.string('highPoint');
         table.string('url');
-        table.string('description');
+        table.text('description');
         table.decimal('latitude');
         table.decimal('longitude');
     })
@@ -16,3 +16,5 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
     return knex.schema.dropTable('hikesInfo');
 };
+
+//migrate down to undoo
