@@ -55,7 +55,6 @@ app.use(setUserNameLocal)
 // use the router
 app.use('/', router.index);
 app.use('/', router.users);
-app.use('/auth', router.auth);
 // configure passport
 // uncomment code below
 app.use(passport.initialize());
@@ -86,10 +85,13 @@ passport.use(new FacebookStrategy({
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
       // and return that user instead.
+      console.log(profile);
       return done(null, profile);
     });
   }
 ));
+
+app.use('/auth', router.auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
