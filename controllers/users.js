@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var hash = require('bcrypt');
+var bcrypt = require('bcrypt');
 var validator = require('../src/validator');
-
+var users = require('../mockupData/mockUpUsers').users;
 // test if user logged in first before routing to
 // user page
 // router.use(function(req, res, next){
@@ -15,7 +15,6 @@ var validator = require('../src/validator');
 // 		next();
 // 	}
 // });
-
 // sign up
 router.get('/signup', function(req, res){
 	res.render('signup/signup', {
@@ -37,10 +36,23 @@ router.post('/signup', function(req, res){
 		1 - find  user in db
 		2 - if user is in database, display error message
 		3 - else hash password using bcrypt
-		4 - insert user in db
-		5 - redirect to users/id
+		4 - sign cookie
+		5 - insert user in db
+		6 - redirect to users/id
 		*/
-    	res.send('success');
+		for(var i = 0; i < users.length; i++){
+			if(users[i].email === req.body.email){
+				res.send('user already exists');
+			}
+			else{
+				addUserToDB(req.body, function(user){
+					res.cookie('userID', 
+								req.body.email, 
+								{signed: true});
+					res.send('success');
+				});
+			}
+		}
     }
 });
 
@@ -68,9 +80,28 @@ router.post('/signin', function(req,res){
 		4 - redirect to users/id
 		5 - else, display error
 		*/
-		res.send('success');
+		for(var i = 0; i < users.length; i++){
 
-    }
+		if(users[i].email === req.body.email){
+
+			if(bcrypt.compareSync(users[i].password, req.body.password)){
+				res.cookie('userID', 
+							req.body.email, 
+							{signed: true});
+				
+				// res.send('success');
+			}
+			else{
+				res.send('password is wrong');
+			}		
+		}
+		else{
+			
+				res.send('User doesn\'t exists');
+			}
+		}
+	}
+
 });
 
 router.get('/users/:id', function(req, res){
@@ -88,5 +119,14 @@ router.get('/signout', function(req, res) {
     res.clearCookie('userID');
     res.redirect('/signin');
 });
+
+function addUserToDB(user, callback){
+	users.push({
+					email: user.email,
+					password: bcrypt.hashSync(user.password,8)
+				});
+
+	callback(user);
+}
 
 module.exports = router;

@@ -25,7 +25,7 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.SECRET));
 app.use(cookieSession({
   name : 'session',
   keys : ['jhsdfkjsfkjl']
@@ -44,9 +44,6 @@ app.use(morgan('tiny'));
 
 //uset method overload with variable called _method
 app.use(methodOverride('_method'));
-
-//use signed Cookies
-app.use(cookieParser(process.env.SECRET));
 
 var setUserNameLocal = function (req, res, next) {
   res.locals.currentUser = req.cookies.user
