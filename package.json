@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/walzerm/hikeWeatherApp#readme",
   "dependencies": {
+<<<<<<< HEAD
     "async": "^1.5.2",
+=======
+>>>>>>> e527525a020a893aa82158a74dc9cd234280c566
     "bcrypt": "^0.8.5",
     "body-parser": "^1.14.2",
     "cookie-parser": "^1.4.1",
@@ -26,7 +29,10 @@
     "dotenv": "^1.2.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+<<<<<<< HEAD
     "fs": "0.0.2",
+=======
+>>>>>>> e527525a020a893aa82158a74dc9cd234280c566
     "knex": "^0.9.0",
     "locus": "^1.2.0",
     "method-override": "^2.3.5",
@@ -37,7 +43,10 @@
     "path": "^0.12.7",
     "pg": "^4.4.3",
     "serve-favicon": "^2.3.0",
+<<<<<<< HEAD
     "sync": "^0.2.5",
+=======
+>>>>>>> e527525a020a893aa82158a74dc9cd234280c566
     "vo": "^1.0.3"
   }
 }

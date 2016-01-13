@@ -1,0 +1,53 @@
+#navigationBar{
+	background: #3B4F53;
+	border: 0px;
+    border-radius: 0;
+    margin-bottom: 0px;
+}
+
+#navBarBrand, #navBarItems > li > a{
+	color: #ECEDEF;
+}
+
+#navBarBrand:hover, #navBarItems > li > a:hover{
+	color: #A0A9AE;
+}
+
+.fa-cog {
+  color: #D07258;
+}
+
+.index-cover{
+	height: 500px;
+	background: url('https://images.unsplash.com/photo-1420582282039-a6d11404cb66?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=9d7c41ec56079e595ca86ee5f8d77362');
+	background-size: cover;
+}
+.index-cover >div > div >.btn-cog{
+	margin-top: 30%;
+	width: 25%;
+	height: 20%;
+	background: #D07258;
+	border: 0px;	
+}
+
+.index-cover > div > div>.btn-cog:hover{
+	background: #D07258;
+	border: 0px;
+}
+.btn-cog{
+	background: #D07258;
+	border: 0px;
+}
+
+.footer {
+   background: #3B4F53;
+   color: white;
+   height: 50px;
+}
+.footer > div> div>p{
+	margin-top: 15px;
+}
+
+body { 
+	padding-bottom: 100px;
+}

@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="row">
+		<div class="sign-form">
+			<div>
+				<form method="POST" action="/auth/signin">
+					<div class="form-group">
+						<label>Email</label>
+						<input class="form-control" type="text" name="email" id="email">
+					</div>
+
+					<div class="form-group">
+	                    <label>Password</label>
+	                    <input class="form-control" type="text" name="password" id="password">
+	                </div>
+
+					<button type="submit" class="btn btn-danger btn-cog btn-block">Sign in
+			    	</button>
+
+			    	<br>
+			    	<div class="text-center">
+			    		<h4> Or</h4>
+			    	</div>
+			    	<br>
+			    	<a class="btn btn-primary btn-block" href="/auth/facebook">Sign in With Facebook
+			    	</a>
+			    	<br>
+			    	<br>
+			    	<div class="text-center sign-link">
+			    		<a href="/auth/signup">Not a user? Sign Up!</a>
+			    	</div>
+				</form>	
+			</div>
+		</div>
+	</div>
+</div>
