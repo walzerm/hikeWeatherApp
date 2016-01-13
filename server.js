@@ -45,12 +45,6 @@ app.use(morgan('tiny'));
 //uset method overload with variable called _method
 app.use(methodOverride('_method'));
 
-var setUserNameLocal = function (req, res, next) {
-  res.locals.currentUser = req.cookies.user
-  next()
-}
-
-app.use(setUserNameLocal)
 
 // use the router
 app.use('/', router.index);
@@ -65,8 +59,8 @@ passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+passport.deserializeUser(function(user, done) {
+  done(null, user);
 });
 
 //configure
@@ -91,8 +85,15 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+var setUserNameLocal = function (req, res, next) {
+  res.locals.currentUser = req.cookies.user
+  next()
+}
+
+app.use(setUserNameLocal);
+
 app.use('/auth', router.auth);
-app.use('/', router.users);
+app.use('/users', router.users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

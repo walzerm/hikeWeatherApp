@@ -14,7 +14,21 @@ router.get('/facebook/callback',
   	passport.authenticate('facebook', { failureRedirect: '/login' }),
   	function(req, res) {
     // Successful authentication, redirect home.
-    	res.redirect('/');
+    /*
+    	check if user in db already using fb_id
+    	if user is in db, return the user_id 
+    	redirect to users/user_id
+    	else
+    	create new user (add to db)
+    	redirect to users/user_id
+    */
+
+    // change 1 to user ID
+
+    console.log('*******************');
+    console.log(req.user);
+
+    res.redirect('/users/1');
 });
 
 router.get('/logout', function(req, res){
@@ -43,22 +57,15 @@ router.post('/signup', function(req, res){
     	/* 
 		1 - find  user in db
 		2 - if user is in database, display error message
-		3 - else hash password using bcrypt
-		4 - sign cookie
-		5 - insert user in db
-		6 - redirect to users/id
+		3 - else 
+		4 - redirect to users/new
 		*/
 		for(var i = 0; i < users.length; i++){
 			if(users[i].email === req.body.email){
 				res.send('user already exists');
 			}
 			else{
-				addUserToDB(req.body, function(user){
-					res.cookie('userID', 
-								req.body.email, 
-								{signed: true});
-					res.send('success');
-				});
+				res.redirect('/users/new');
 			}
 		}
     }
@@ -123,13 +130,6 @@ router.get('/signout', function(req, res) {
 });
 
 
-function addUserToDB(user, callback){
-	users.push({
-					email: user.email,
-					password: bcrypt.hashSync(user.password,8)
-				});
 
-	callback(user);
-}
 
 module.exports = router;
