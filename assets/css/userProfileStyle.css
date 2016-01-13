@@ -4,6 +4,9 @@
 	background: #D07258;
 	border: 0px;
 }
+.user-profile-placeholder:hover{
+	background: rgba(208,114,88,0.8);
+}
 
 .user-profile-weather{
 	width: 100%;

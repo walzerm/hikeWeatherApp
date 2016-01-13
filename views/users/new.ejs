@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New User</title>
+	<% include ../style%>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/userProfileStyle.css">
+
+</head>
+<body>
+	<% include ../homeHeader %>
+	<br>
+	<br>
+	<div class="container">
+	    <div class="row">
+	    	<div class="col-md-12">
+	    		<div class="col-md-3">
+					<img src="" class="user-profile-placeholder img-rounded center-block">
+				</div>
+				<div class="col-md-9">
+	    			<div class="">
+						<form method="POST" action="/users">
+							<div class="form-group">
+								<label>Name</label>
+								<input class="form-control" type="text" name="name" id="name">
+							</div>
+
+							<div class="form-group">
+			                    <label>descriptoion</label>
+			                    <textarea class="form-control" rows="3" name="description" id"discription"></textarea>
+			                </div>
+
+							<button type="submit" class="btn btn-danger btn-cog btn-block">Create User
+					    	</button>
+
+				    		<br>
+				    		<br>
+				    	
+						</form>	
+					</div>	
+	    		</div>
+	    	</div>
+	    	
+		</div>
+	</div>
+</body>
+</html>
+

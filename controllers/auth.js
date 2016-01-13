@@ -24,7 +24,7 @@ router.get('/facebook/callback',
     */
 
     // change 1 to user ID
-    res.redirect('/users/1');
+    res.redirect('/users');
 });
 
 router.get('/logout', function(req, res){
@@ -110,7 +110,7 @@ router.post('/signin', function(req,res){
 						displayName:'Lissa walzer',
 						photo:""});
 
-					return res.redirect('/users/1');
+					return res.redirect('/users');
 				}
 				else{
 					 return res.send('password is wrong');
@@ -132,7 +132,7 @@ router.get('/signout', function(req, res) {
 	2 - redirect to index page
 	*/
     res.clearCookie('userID');
-    res.redirect('/signin');
+    res.redirect('/auth/signin');
 });
 
 
