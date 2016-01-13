@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home Page</title>
+	<% include ../style%>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/userProfileStyle.css">
+</head>
+<body>
+	<% include ../homeHeader %>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-3">
+					<img src="<%=photo%>" class="user-profile-placeholder img-rounded center-block">
+					<br>
+					<div class="jumbotron">
+						<h4><%=user.displayName%></h4>
+					  	<p> <small>
+					  	  Microdosing tilde flexitarian, meggings franzen tousled etsy biodiesel quinoa. Cold-pressed cray retro authentic. Listicle humblebrag hoodie roof party, bicycle rights asymmetrical you probably haven't heard of them.
+					  	  </small>
+					  	</p>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<img src="https://images.unsplash.com/photo-1445308394109-4ec2920981b1?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=37943d3b5c2a6a6401b5c9b9f0c60a68" class="user-profile-weather img-rounded center-block">
+					<br>
+					<div class="jumbotron">
+					  	<h4> List of Favorite Hikes!</h4>
+					  	<p> 
+					  		<ul>
+					  			<li>Microdosing tilde flexitarian, meggings franzen tousled</li>
+					  		   	<li>etsy biodiesel quinoa. Cold-pressed cray retro authentic. </li>
+					  		   	<li>Listicle humblebrag hoodie roof party, bicycle rights asymmetrical you probably haven't heard of them.</li>
+					  		   	<li>Polaroid leggings umami, narwhal locavore echo park slow-carb YOLO.</li>
+					  		   	<li> Marfa VHS gastropub letterpress messenger bag.</li>
+					  		   	<li>Fixie seitan helvetica, banh mi butcher put a bird on it keytar tote bag franzen pop-up tousled skateboard.</li> 
+					  		   	<li>Chicharrones yr four dollar toast irony, paleo chia brooklyn.</li>
+					  		 </ul>
+					  	</p>
+					  	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% include ../footer %>
+</body>
+</html>

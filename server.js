@@ -26,11 +26,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.SECRET));
+
+/* keys encrypt my cookie
+   name is renaming my session variable
+   if name was potato instead of session
+   then instead of accessing session thru
+   req.session, I'd access it thru
+   req.potato
+*/
+
 app.use(cookieSession({
   name : 'session',
   keys : ['jhsdfkjsfkjl']
 }));
-
 
 // set view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -45,12 +53,6 @@ app.use(morgan('tiny'));
 //uset method overload with variable called _method
 app.use(methodOverride('_method'));
 
-var setUserNameLocal = function (req, res, next) {
-  res.locals.currentUser = req.cookies.user
-  next()
-}
-
-app.use(setUserNameLocal)
 
 // use the router
 app.use('/', router.index);
@@ -65,8 +67,8 @@ passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+passport.deserializeUser(function(user, done) {
+  done(null, user);
 });
 
 //configure
@@ -75,7 +77,7 @@ passport.use(new FacebookStrategy({
     clientSecret: process.env['FACEBOOK_APP_SECRET'],
     callbackURL: "http://localhost:8000/auth/facebook/callback",
     enableProof: false,
-    profileFields: ['id', 'displayName', 'photos']
+    profileFields: ['id', 'displayName', 'picture.type(large)']
 
   },
   function(accessToken, refreshToken, profile, done) {
@@ -91,8 +93,17 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+// set cookies for regular auth
+// should be before routes
+var setUserNameLocal = function (req, res, next) {
+  res.locals.currentUser = req.cookies.user
+  next()
+}
+
+app.use(setUserNameLocal);
+
 app.use('/auth', router.auth);
-app.use('/', router.users);
+app.use('/users', router.users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
