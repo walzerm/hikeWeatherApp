@@ -93,24 +93,24 @@ router.post('/signin', function(req,res){
 		*/
 		for(var i = 0; i < users.length; i++){
 
-		if(users[i].email === req.body.email){
+			if(users[i].email === req.body.email){
+				
+				if(bcrypt.compareSync(req.body.password, users[i].password)){
+					res.cookie('userID', 
+								req.body.email, 
+								{signed: true});
 
-			if(bcrypt.compareSync(users[i].password, req.body.password)){
-				res.cookie('userID', 
-							req.body.email, 
-							{signed: true});
+					return res.send('success');
+				}
+				else{
+					 return res.send('password is wrong');
 
-				// res.send('success');
-			}
-			else{
-				res.send('password is wrong');
-			}		
-		}
-		else{
-			
-				res.send('User doesn\'t exists');
+				}
+						
 			}
 		}
+
+		res.send('User doesn\'t exists');
 	}
 
 });
