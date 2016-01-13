@@ -132,6 +132,7 @@ router.get('/signout', function(req, res) {
 	2 - redirect to index page
 	*/
     res.clearCookie('userID');
+    res.clearCookie('user');
     res.redirect('/auth/signin');
 });
 
