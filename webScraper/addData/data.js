@@ -1,7 +1,7 @@
-var knex = require('./db/knex');
+var knex = require('../db/knex');
 var fs = require('fs');
 
-fs.readFile('./hikesData.json', 'utf8', function(err, data) {
+fs.readFile('../rawData/hikesData.json', 'utf8', function(err, data) {
     var hikeData = JSON.parse(data);
     var insertObj = {};
 
@@ -46,7 +46,7 @@ fs.readFile('./hikesData.json', 'utf8', function(err, data) {
             }
              //console.log(insertObj);
 
-         knex('hikesInfo').insert(insertObj).then(function() {
+         knex('hikesinfo').insert(insertObj).then(function() {
              console.log('done');
          });
 

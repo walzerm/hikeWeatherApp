@@ -59,7 +59,7 @@ function *run() {
         yield nightmareText.end();
 
     //Writes the data to a JSON file
-    fs.writeFile('./hikesData.json', JSON.stringify(textArr, null, 2), function(err, data) {
+    fs.writeFile('../rawData/hikesData.json', JSON.stringify(textArr, null, 2), function(err, data) {
         if (err) {
             console.log(err);
         }

@@ -1,4 +1,5 @@
 //run with node --harmony latLongNightmare.js
+//Look for node request throttling library
 
 var Nightmare = require('nightmare');
 var vo = require('vo');
@@ -27,7 +28,6 @@ function runNightmare(url) {
 
     function *run() {
         var temp = [];
-        //var numberRegEx = /-?[0-9]\d*(\.\d+)?/g;
         var nightmareShit = new Nightmare();
         var latLong = yield nightmareShit
 
@@ -40,7 +40,7 @@ function runNightmare(url) {
         temp.push(latLong);
         temp.push(url);
         yield nightmareShit.end();
-        fs.appendFile('./latLongData.json', JSON.stringify(temp), 'utf8', function(err) {
+        fs.appendFile('../rawData/latLongData.json', JSON.stringify(temp), 'utf8', function(err) {
             console.log('success');
         });
     }
