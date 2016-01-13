@@ -50,5 +50,6 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 - [Login page](https://wireframe.cc/KQQXIg)
 - [Create account page](https://wireframe.cc/xX5mzG)
 
+
 ### Site Map
 [SiteMap](https://docs.google.com/drawings/d/1Jq2oxTl2ohGSNpi5BduJFblOwwGwdVJ021cfo5fvvT4/edit?usp=sharing)
