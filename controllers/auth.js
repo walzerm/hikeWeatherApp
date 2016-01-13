@@ -24,9 +24,8 @@ router.get('/facebook/callback',
     */
 
     // change 1 to user ID
-
     console.log('*******************');
-    console.log(req.user);
+    console.log(req.user.photos[0].value);
     res.redirect('/users/1');
 });
 

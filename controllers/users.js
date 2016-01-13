@@ -46,7 +46,10 @@ router.get('/:id', function(req, res){
 	/*
 		find user in data base and send user to the user page
 	*/
-  	res.render('users/user',{user : req.user});
+  	res.render('users/user',{
+  		user : req.user,
+  		photo: req.user.photos[0].value			
+  	});
 });
 
 function addUserToDB(user, callback){
