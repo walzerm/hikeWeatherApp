@@ -38,7 +38,9 @@
 	background: #D07258;
 	border: 0px;
 }
-
+.btn-cog:hover{
+	background: #3B4F53;
+}
 .footer {
    background: #3B4F53;
    color: white;

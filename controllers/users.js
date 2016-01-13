@@ -18,7 +18,7 @@ router.get('/', function(req, res){
 	/*
 		find user in data base and send user to the user page
 	*/
-	console.log(res.locals.currentUser);
+	// console.log(res.locals.currentUser);
 	if(!res.locals.currentUser){
 
 		res.render('users/user',{
@@ -40,6 +40,7 @@ router.get('/new', function(req, res){
 	/* 
 		success, render create new user form
 	*/
+
 	res.render('users/new', {user : res.locals.currentUser});
 });
 
@@ -60,6 +61,8 @@ router.post('/', function(req,res){
 	// 			});
 
 	// res.send('successfull user insertion');
+	console.log('**********');
+	console.log(req.body);
 	res.redirect('/users');
 });
 
