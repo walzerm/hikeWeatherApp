@@ -26,11 +26,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.SECRET));
+
+/* keys encrypt my cookie
+   name is renaming my session variable
+   if name was potato instead of session
+   then instead of accessing session thru
+   req.session, I'd access it thru
+   req.potato
+*/
+
 app.use(cookieSession({
   name : 'session',
   keys : ['jhsdfkjsfkjl']
 }));
-
 
 // set view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -85,6 +93,8 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+// set cookies for regular auth
+// should be before routes
 var setUserNameLocal = function (req, res, next) {
   res.locals.currentUser = req.cookies.user
   next()

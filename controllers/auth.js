@@ -27,7 +27,6 @@ router.get('/facebook/callback',
 
     console.log('*******************');
     console.log(req.user);
-
     res.redirect('/users/1');
 });
 
