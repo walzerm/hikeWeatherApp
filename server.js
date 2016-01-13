@@ -100,10 +100,13 @@ var setUserNameLocal = function (req, res, next) {
   next()
 }
 
+// set user cookie
 app.use(setUserNameLocal);
 
+// set the routes
 app.use('/auth', router.auth);
 app.use('/users', router.users);
+app.use('/weather', router.weather);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
