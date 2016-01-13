@@ -1,4 +1,4 @@
-##Backend Project
+##Take A Hike
 
 ### Project Description
 
@@ -32,6 +32,7 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 - oAuth
 - Weather API
 - Zip code API (https://www.zipcodeapi.com/)
+- [Latitude and Longitude to zip code converter](https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding)
 
 ### Features
 
