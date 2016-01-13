@@ -99,8 +99,18 @@ router.post('/signin', function(req,res){
 					res.cookie('userID', 
 								req.body.email, 
 								{signed: true});
+					res.cookie('displayName', 
+								"Lissa Walzed", 
+								{signed: true});
+					res.cookie('photo', 
+								"", 
+								{signed: true});
 
-					return res.send('success');
+					res.cookie('user', {
+						displayName:'Lissa walzer',
+						photo:""});
+
+					return res.redirect('/users/1');
 				}
 				else{
 					 return res.send('password is wrong');
