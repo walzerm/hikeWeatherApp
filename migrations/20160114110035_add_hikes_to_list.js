@@ -4,9 +4,10 @@ exports.up = function(knex, Promise) {
         table.increments();
         table.float('list_id');
         table.float('hike_id');
+        table.string('hike_url');
     })
 };
 
 exports.down = function(knex, Promise) {
-    return knes.schema.dropTable('fav_hikes');
+    return knex.schema.dropTable('fav_hikes');
 };
