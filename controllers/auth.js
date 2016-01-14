@@ -56,7 +56,7 @@ router.post('/signup', function(req, res){
                 var hash = bcrypt.hashSync(req.body.password, 8);
                 knex('users').insert({
                     name: req.body.name,
-                    email: req.body.email,
+                    email: req.body.email.toLowerCase(),
                     password: hash
                 }).then(function() {
                     res.redirect('/users');
@@ -99,16 +99,19 @@ router.post('/signin', function(req,res){
         res.render('signin/signin', {
         	errorMessage: "Email And password combination is invalid"});
     } else {
-        knex('users').where('email', req.body.email).first().then(function(user) {
+        knex('users').where('email', req.body.email.toLowerCase()).first().then(function(user) {
             //console.log(user);
             if (!user) {
                 console.log('not a user');
                 res.render('signin/signin', {
-                	errorMessage: "Email And password combination is invalid"});
+                	errorMessage: "Email or password is invalid"});
             } else {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
                     res.cookie('userID', user.id, { signed: true });
                     res.redirect('/users');
+                } else {
+                    res.render('signin/signin', {
+                    	errorMessage: "Email or password is invalid"});
                 }
             }
         })
