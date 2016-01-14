@@ -47,6 +47,13 @@
 					  		            </p>
 					  		        </td>
                                     <td>
+                                        <form method="post" action="/list/hikes" >
+                                            <input type="hidden" name="hiddenID" value="<%= lists.id %>">
+                                            <input type="hidden" name="hiddenName" value="<%= lists.list_name %>">
+                                            <input type="submit" name="name" value="See Hikes">
+                                        </form>
+                                    </td>
+                                    <td>
                                         <form method="post" action="/list/delete?_method=DELETE" >
                                             <input type="hidden" name="hiddenName" value="<%= lists.id %>">
                                             <input type="submit" name="name" value="Delete List">

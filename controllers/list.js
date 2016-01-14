@@ -32,5 +32,12 @@ router.delete('/delete', function(req, res) {
     });
 })
 
+router.post('/hikes', function(req, res) {
+    knex('fav_hikes').where('id', req.body.hiddenID).then(function(hikes) {
+        res.render('hikes/hikes', {list_name: req.body.hiddenName});
+
+    })
+})
+
 
 module.exports = router;
