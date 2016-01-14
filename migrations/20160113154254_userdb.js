@@ -5,6 +5,8 @@ exports.up = function(knex, Promise) {
         table.string('name');
         table.string('facebook_id');
         table.text('description');
+        table.string('email');
+        table.string('password');
     })
 };
 
