@@ -30,7 +30,7 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 - postgres
 - knex
 - oAuth
-- Weather API
+- [Weather API](http://openweathermap.org/api)
 - Zip code API (https://www.zipcodeapi.com/)
 - [Latitude and Longitude to zip code converter](https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding)
 
