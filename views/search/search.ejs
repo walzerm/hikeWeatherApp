@@ -21,7 +21,11 @@
 					<div class="jumbotron">
 						<%if(currentWeather){ %>
 							<p>
-						  		<%= currentWeather %>
+						  		<%= currentWeather.weather[0].main %>
+							</p>
+							<p>
+							  	<%= currentWeather.main.temp %>
+
 							</p>
 						<%}%>
 						
