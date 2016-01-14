@@ -38,15 +38,26 @@
                             </div>
                         </form>
 					  	<p>
-					  		<ul>
-					  			<li>Microdosing tilde flexitarian, meggings franzen tousled</li>
+					  		<table>
+                                <% hikes.forEach(function(lists) { %>
+					  		    <tr>
+					  		        <td>
+					  		            <p>
+					  		                <%= lists.list_name %>
+					  		            </p>
+					  		        </td>
+					  		    </tr>
+                                <% }) %>
+					  		</table>
+
+					  			<!-- <li>Microdosing tilde flexitarian, meggings franzen tousled</li>
 					  		   	<li>etsy biodiesel quinoa. Cold-pressed cray retro authentic. </li>
 					  		   	<li>Listicle humblebrag hoodie roof party, bicycle rights asymmetrical you probably haven't heard of them.</li>
 					  		   	<li>Polaroid leggings umami, narwhal locavore echo park slow-carb YOLO.</li>
 					  		   	<li> Marfa VHS gastropub letterpress messenger bag.</li>
 					  		   	<li>Fixie seitan helvetica, banh mi butcher put a bird on it keytar tote bag franzen pop-up tousled skateboard.</li>
-					  		   	<li>Chicharrones yr four dollar toast irony, paleo chia brooklyn.</li>
-					  		 </ul>
+					  		   	<li>Chicharrones yr four dollar toast irony, paleo chia brooklyn.</li> -->
+
 					  	</p>
 
 					</div>

@@ -26,18 +26,31 @@ router.get('/', function(req, res){
     //          user: user.name
     //      })
     //  })
+    var userID = req.signedCookies.userID;
+    // console.log(req.signedCookies);
+
 	if(!res.locals.currentUser){
-        console.log(req.user);
-		res.render('users/user',{
-  			user : req.user,
-  			photo: req.user.photos[0].value
-  			});
+        console.log('here');
+        knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
+            res.render('users/user',{
+      			user : req.user,
+      			photo: req.user.photos[0].value,
+                hikes: lists
+      			});
+        });
+
 	}
 	else{
-		res.render('users/user',{
-  			user : res.locals.currentUser,
-  			photo: res.locals.currentUser.photo
-  		});
+        console.log(req.signedCookies);
+        console.log('here instead');
+        knex('fav_hikes_lists').where('user_id', userID).then(function(lists) {
+            console.log(lists);
+    		res.render('users/user',{
+      			user : res.locals.currentUser,
+      			photo: res.locals.currentUser.photo,
+                hikes: lists
+      		});
+        });
 	}
 
 });

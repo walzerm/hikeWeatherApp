@@ -8,9 +8,9 @@ var knex = require('../db/knex');
 router.post('/new', function(req, res) {
     console.log('create a new list with ' + req.body.list + ' yay!!');
     console.log(req.signedCookies.userID);
-    knex('favhikes').where('list_name', req.body.list).first().then(function(list) {
+    knex('fav_hikes_lists').where('list_name', req.body.list).first().then(function(list) {
         if(!list) {
-            knex('favhikes').insert({
+            knex('fav_hikes_lists').insert({
                 list_name: req.body.list,
                 user_id: req.signedCookies.userID
             }).then(function() {
