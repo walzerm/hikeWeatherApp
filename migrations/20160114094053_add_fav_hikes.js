@@ -1,13 +1,12 @@
 
 exports.up = function(knex, Promise) {
-    return knex.schema.createTable('favhikes', function(table) {
+    return knex.schema.createTable('fav_hikes_lists', function(table) {
         table.increments();
         table.float('user_id');
-        table.float('hike_id');
         table.string('list_name');
     })
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('favhikes');
+    return knex.schema.dropTable('fav_hikes_lists');
 };
