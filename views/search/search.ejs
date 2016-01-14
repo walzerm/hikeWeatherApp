@@ -34,6 +34,10 @@
 				<div class="col-md-4">
 					<form method="POST" action="/hikes">
 						<div class="form-group">
+							<label for="seach">Search for Hike</label>
+							<input type="text" class="form-control"name="search" id="search">
+						</div>
+						<div class="form-group">
 							<label for="zipcode">Zipcode</label>
 							<input type="text" class="form-control"name="zipcode" id="zipcode">
 						</div>
@@ -42,6 +46,12 @@
 					   	</button>
 
 					</form>
+					<%if(searchResults){%>
+						<%searchResults.forEach(function(result){%>
+							<p><%= result.name %></p>
+						<%})%>
+					<%}%>
+
 				</div>
 			</div>
 		</div>
