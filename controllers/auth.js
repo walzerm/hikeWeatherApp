@@ -100,12 +100,16 @@ router.post('/signin', function(req,res){
         	errorMessage: "Email And password combination is invalid"});
     } else {
         knex('users').where('email', req.body.email).first().then(function(user) {
+            //console.log(user);
             if (!user) {
                 console.log('not a user');
                 res.render('signin/signin', {
                 	errorMessage: "Email And password combination is invalid"});
             } else {
-
+                if (bcrypt.compareSync(req.body.password, user.password)) {
+                    res.cookie('userID', user.id, { signed: true });
+                    res.redirect('/users');
+                }
             }
         })
     	/*
