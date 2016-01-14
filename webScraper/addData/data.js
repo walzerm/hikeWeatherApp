@@ -1,7 +1,9 @@
-var knex = require('../db/knex');
+var knex = require('../../db/knex');
 var fs = require('fs');
+var file = '../rawData/hikesData.json';
 
-fs.readFile('../rawData/hikesData.json', 'utf8', function(err, data) {
+fs.readFile(file, function(err, data) {
+    console.log(data);
     var hikeData = JSON.parse(data);
     var insertObj = {};
 

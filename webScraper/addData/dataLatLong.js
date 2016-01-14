@@ -1,4 +1,4 @@
-var knex = require('../db/knex');
+var knex = require('../../db/knex');
 var fs = require('fs');
 
 fs.readFile('../rawData/latLongData.json', 'utf8', function(err, data) {
