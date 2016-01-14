@@ -20,11 +20,11 @@ router.get('/facebook/callback',
                     name: req.user.displayName,
                     facebook_id: req.user.id
                 }, 'id').then(function(id) {
-                    res.redirect('/users/'/* + id[0]*/);
+                    res.redirect('/users');
                 })
             } else {
                 console.log(user);
-                res.redirect('/users/'/* + user.id*/);
+                res.redirect('/users');
             }
         })
 });
