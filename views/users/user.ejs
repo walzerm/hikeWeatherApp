@@ -46,6 +46,12 @@
 					  		                <%= lists.list_name %>
 					  		            </p>
 					  		        </td>
+                                    <td>
+                                        <form method="post" action="/list/delete?_method=DELETE" >
+                                            <input type="hidden" name="hiddenName" value="<%= lists.id %>">
+                                            <input type="submit" name="name" value="Delete List">
+                                        </form>
+                                    </td>
 					  		    </tr>
                                 <% }) %>
 					  		</table>
