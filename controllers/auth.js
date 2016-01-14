@@ -20,25 +20,13 @@ router.get('/facebook/callback',
                     name: req.user.displayName,
                     facebook_id: req.user.id
                 }, 'id').then(function(id) {
-                    res.redirect('/users/' + id[0]);
+                    res.redirect('/users/'/* + id[0]*/);
                 })
             } else {
                 console.log(user);
-                res.redirect('/users/' + user.id);
+                res.redirect('/users/'/* + user.id*/);
             }
         })
-    // Successful authentication, redirect home.
-    /*
-    	check if user in db already using fb_id
-    	if user is in db, return the user_id
-    	redirect to users/user_id
-    	else
-    	create new user (add to db)
-    	redirect to users/user_id
-    */
-
-    // change 1 to user ID
-    //res.redirect('/users');
 });
 
 router.get('/logout', function(req, res){
@@ -59,25 +47,33 @@ router.post('/signup', function(req, res){
 	var errormessages = [];
     errormessages = validator.error(req.body);
 
+
     if(errormessages.length > 0){
         res.render('signup/signup', {
         	errorMessage: "Email And password combination is invalid"});
     }
     else{
+        knex('users').where('email', req.body.email).first().then(function(user) {
+            if (!user) {
+                res.redirect('/users/new');
+            } else {
+                res.send('user already exists');
+            }
+        })
     	/*
 		1 - find  user in db
 		2 - if user is in database, display error message
 		3 - else
 		4 - redirect to users/new
 		*/
-		for(var i = 0; i < users.length; i++){
-			if(users[i].email === req.body.email){
-				res.send('user already exists');
-			}
-			else{
-				res.redirect('/users/new');
-			}
-		}
+		// for(var i = 0; i < users.length; i++){
+		// 	if(users[i].email === req.body.email){
+		// 		res.send('user already exists');
+		// 	}
+		// 	else{
+		// 		res.redirect('/users/new');
+		// 	}
+		// }
     }
 });
 
