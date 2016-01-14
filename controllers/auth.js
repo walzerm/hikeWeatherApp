@@ -94,24 +94,28 @@ router.post('/signin', function(req,res){
 
 	var errormessages = [];
     errormessages = validator.error(req.body);
+    console.log(req.body);
 
     if(errormessages.length > 0){
         res.render('signin/signin', {
-        	errorMessage: "Email And password combination is invalid"});
+        	errorMessage: "Shit ain't working, yo! Try again."});
     } else {
         knex('users').where('email', req.body.email.toLowerCase()).first().then(function(user) {
             //console.log(user);
             if (!user) {
                 console.log('not a user');
                 res.render('signin/signin', {
-                	errorMessage: "Email or password is invalid"});
+                	errorMessage: "Shit ain't working, yo! Try again."});
             } else {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
+                    console.log('redirecting yo');
+                    console.log(user.id);
                     res.cookie('userID', user.id, { signed: true });
+                    console.log(req.signedCookies['userID']);
                     res.redirect('/users');
                 } else {
                     res.render('signin/signin', {
-                    	errorMessage: "Email or password is invalid"});
+                    	errorMessage: "Shit ain't working, yo! Try again."});
                 }
             }
         })
@@ -162,6 +166,7 @@ router.get('/signout', function(req, res) {
 	1 - clear cookie
 	2 - redirect to index page
 	*/
+    req.logout();
     res.clearCookie('userID');
     res.clearCookie('user');
     res.redirect('/auth/signin');

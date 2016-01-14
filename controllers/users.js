@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var users = require('../mockupData/mockUpUsers').users;
+var knex = require('../db/knex');
 
 // uncomment code here
 // check if user is logged in with either oAuth or auth
 router.use(function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated() || res.locals.currentUser) { 
-  	return next(); 
+  if (req.isAuthenticated() || res.locals.currentUser) {
+  	return next();
   }
   else{
 
@@ -18,26 +19,31 @@ router.get('/', function(req, res){
 	/*
 		find user in data base and send user to the user page
 	*/
-	// console.log(res.locals.currentUser);
-	if(!res.locals.currentUser){
+    console.log(req.signedCookies['userID']);
+	 knex('users').where('id', req.signedCookies.userID).first().then(function(user) {
+         res.render('users/user', {
+             user: user.name
+         })
+     })
+	// if(!res.locals.currentUser){
+    //     console.log(req.user);
+	// 	res.render('users/user',{
+ //  			user : req.user,
+ //  			photo: req.user.photos[0].value
+ //  			});
+	// }
+	// else{
+	// 	res.render('users/user',{
+ //  			user : res.locals.currentUser,
+ //  			photo: res.locals.currentUser.photo
+ //  		});
+	// }
 
-		res.render('users/user',{
-  			user : req.user,
-  			photo: req.user.photos[0].value			
-  			});	
-	}
-	else{
-		res.render('users/user',{
-  			user : res.locals.currentUser,
-  			photo: res.locals.currentUser.photo			
-  		});
-	}
-  	
 });
 
 // create new user
 router.get('/new', function(req, res){
-	/* 
+	/*
 		success, render create new user form
 	*/
 
@@ -54,8 +60,8 @@ router.post('/', function(req,res){
 	*/
 
 	// addUserToDB(req.body, function(user){
-	// 				res.cookie('userID', 
-	// 							req.body.email, 
+	// 				res.cookie('userID',
+	// 							req.body.email,
 	// 							{signed: true});
 	// 				res.send('success');
 	// 			});
