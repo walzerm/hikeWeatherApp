@@ -107,6 +107,7 @@ app.use(setUserNameLocal);
 app.use('/auth', router.auth);
 app.use('/users', router.users);
 app.use('/weather', router.weather);
+app.use('/hikes', router.hikes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
