@@ -70,5 +70,12 @@ var ErrorGenerator = function(user){
 
     return errors;
 }
+ var isValidZipCode = function(zipCode){
 
-module.exports = {error: ErrorGenerator};
+    return /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipCode);
+ }
+
+module.exports = {
+    error: ErrorGenerator,
+    zipCode: isValidZipCode
+};
