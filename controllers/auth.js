@@ -4,6 +4,7 @@ var passport = require('passport');
 var bcrypt = require('bcrypt');
 var validator = require('../src/validator');
 var users = require('../mockupData/mockUpUsers').users;
+var knex = require('../db/knex');
 
 // oAuth With facebook
 router.get('/facebook',
@@ -13,10 +14,23 @@ router.get('/facebook',
 router.get('/facebook/callback',
   	passport.authenticate('facebook', { failureRedirect: '/login' }),
   	function(req, res) {
+        knex('users').where('facebook_id', req.user.id).first().then(function(user) {
+            if (!user) {
+                knex('users').insert({
+                    name: req.user.displayName,
+                    facebook_id: req.user.id
+                }, 'id').then(function(id) {
+                    res.redirect('/users/' + id[0]);
+                })
+            } else {
+                console.log(user);
+                res.redirect('/users/' + user.id);
+            }
+        })
     // Successful authentication, redirect home.
     /*
     	check if user in db already using fb_id
-    	if user is in db, return the user_id 
+    	if user is in db, return the user_id
     	redirect to users/user_id
     	else
     	create new user (add to db)
@@ -24,7 +38,7 @@ router.get('/facebook/callback',
     */
 
     // change 1 to user ID
-    res.redirect('/users');
+    //res.redirect('/users');
 });
 
 router.get('/logout', function(req, res){
@@ -41,7 +55,7 @@ router.get('/signup', function(req, res){
 });
 
 router.post('/signup', function(req, res){
-	
+
 	var errormessages = [];
     errormessages = validator.error(req.body);
 
@@ -50,10 +64,10 @@ router.post('/signup', function(req, res){
         	errorMessage: "Email And password combination is invalid"});
     }
     else{
-    	/* 
+    	/*
 		1 - find  user in db
 		2 - if user is in database, display error message
-		3 - else 
+		3 - else
 		4 - redirect to users/new
 		*/
 		for(var i = 0; i < users.length; i++){
@@ -75,7 +89,7 @@ router.get('/signin', function(req, res, next){
 });
 
 router.post('/signin', function(req,res){
-	
+
 	var errormessages = [];
     errormessages = validator.error(req.body);
 
@@ -84,7 +98,7 @@ router.post('/signin', function(req,res){
         	errorMessage: "Email And password combination is invalid"});
     }
     else{
-    	/* 
+    	/*
 		1 - find  user in db
 		2 - if user is in database,
 		3 -  compare the hashed the password using bcrypt
@@ -94,16 +108,16 @@ router.post('/signin', function(req,res){
 		for(var i = 0; i < users.length; i++){
 
 			if(users[i].email === req.body.email){
-				
+
 				if(bcrypt.compareSync(req.body.password, users[i].password)){
-					res.cookie('userID', 
-								req.body.email, 
+					res.cookie('userID',
+								req.body.email,
 								{signed: true});
-					res.cookie('displayName', 
-								"Lissa Walzed", 
+					res.cookie('displayName',
+								"Lissa Walzed",
 								{signed: true});
-					res.cookie('photo', 
-								"", 
+					res.cookie('photo',
+								"",
 								{signed: true});
 
 					res.cookie('user', {
@@ -116,7 +130,7 @@ router.post('/signin', function(req,res){
 					 return res.send('password is wrong');
 
 				}
-						
+
 			}
 		}
 
