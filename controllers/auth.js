@@ -111,7 +111,7 @@ router.post('/signin', function(req,res){
                     console.log('redirecting yo');
                     console.log(user.id);
                     res.cookie('userID', user.id, { signed: true });
-                    console.log(req.signedCookies['userID']);
+                    console.log(req.signedCookies);
                     res.redirect('/users');
                 } else {
                     res.render('signin/signin', {
