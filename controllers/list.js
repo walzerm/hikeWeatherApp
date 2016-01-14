@@ -6,8 +6,7 @@ var knex = require('../db/knex');
 
 
 router.post('/new', function(req, res) {
-    console.log('create a new list with ' + req.body.list + ' yay!!');
-    console.log(req.signedCookies.userID);
+
     knex('fav_hikes_lists').where({
         list_name: req.body.list,
         user_id: req.signedCookies.userID

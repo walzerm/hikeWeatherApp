@@ -19,15 +19,7 @@ router.get('/', function(req, res){
 	/*
 		find user in data base and send user to the user page
 	*/
-    //console.log(req);
-    // console.log(req.signedCookies);
-	//  knex('users').where('id', req.signedCookies.userID).first().then(function(user) {
-    //      res.render('users/user', {
-    //          user: user.name
-    //      })
-    //  })
     var userID = req.signedCookies.userID;
-    // console.log(req.signedCookies);
 
 	if(!res.locals.currentUser){
         console.log('here');
@@ -73,14 +65,6 @@ router.post('/', function(req,res){
 		5 -  redirect to '/:id' when successfull
 	*/
 
-	// addUserToDB(req.body, function(user){
-	// 				res.cookie('userID',
-	// 							req.body.email,
-	// 							{signed: true});
-	// 				res.send('success');
-	// 			});
-
-	// res.send('successfull user insertion');
 	console.log('**********');
 	console.log(req.body);
 	res.redirect('/users');
