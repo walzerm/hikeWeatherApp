@@ -53,6 +53,7 @@ router.post('/signup', function(req, res){
     } else{
         knex('users').where('email', req.body.email).first().then(function(user) {
             if (!user) {
+                console.log('what');
                 var hash = bcrypt.hashSync(req.body.password, 8);
                 knex('users').insert({
                     name: req.body.name,
