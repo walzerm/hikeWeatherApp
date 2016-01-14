@@ -43,7 +43,6 @@ router.get('/signup', function(req, res){
 });
 
 router.post('/signup', function(req, res){
-
 	var errormessages = [];
     errormessages = validator.error(req.body);
 
@@ -51,11 +50,18 @@ router.post('/signup', function(req, res){
     if(errormessages.length > 0){
         res.render('signup/signup', {
         	errorMessage: "Email And password combination is invalid"});
-    }
-    else{
+    } else{
         knex('users').where('email', req.body.email).first().then(function(user) {
             if (!user) {
-                res.redirect('/users/new');
+                var hash = bcrypt.hashSync(req.body.password, 8);
+                knex('users').insert({
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: hash
+                }).then(function() {
+                    res.redirect('/users');
+                })
+
             } else {
                 res.send('user already exists');
             }
