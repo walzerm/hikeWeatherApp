@@ -7,6 +7,7 @@ var users = require('../mockupData/mockUpUsers').users;
 var knex = require('../db/knex');
 
 // oAuth With facebook
+//Facebook users will not have an email stored
 router.get('/facebook',
 	passport.authenticate('facebook')
 );
@@ -19,11 +20,10 @@ router.get('/facebook/callback',
                 knex('users').insert({
                     name: req.user.displayName,
                     facebook_id: req.user.id
-                }, 'id').then(function(id) {
+                }).then(function() {
                     res.redirect('/users');
                 })
             } else {
-                console.log(user);
                 res.redirect('/users');
             }
         })
@@ -151,8 +151,6 @@ router.get('/signout', function(req, res) {
     res.clearCookie('user');
     res.redirect('/auth/signin');
 });
-
-
 
 
 module.exports = router;
