@@ -98,8 +98,16 @@ router.post('/signin', function(req,res){
     if(errormessages.length > 0){
         res.render('signin/signin', {
         	errorMessage: "Email And password combination is invalid"});
-    }
-    else{
+    } else {
+        knex('users').where('email', req.body.email).first().then(function(user) {
+            if (!user) {
+                console.log('not a user');
+                res.render('signin/signin', {
+                	errorMessage: "Email And password combination is invalid"});
+            } else {
+
+            }
+        })
     	/*
 		1 - find  user in db
 		2 - if user is in database,
@@ -107,36 +115,36 @@ router.post('/signin', function(req,res){
 		4 - redirect to users/id
 		5 - else, display error
 		*/
-		for(var i = 0; i < users.length; i++){
+		// for(var i = 0; i < users.length; i++){
+        //
+		// 	if(users[i].email === req.body.email){
+        //
+		// 		if(bcrypt.compareSync(req.body.password, users[i].password)){
+		// 			res.cookie('userID',
+		// 						req.body.email,
+		// 						{signed: true});
+		// 			res.cookie('displayName',
+		// 						"Lissa Walzed",
+		// 						{signed: true});
+		// 			res.cookie('photo',
+		// 						"",
+		// 						{signed: true});
+        //
+		// 			res.cookie('user', {
+		// 				displayName:'Lissa walzer',
+		// 				photo:""});
+        //
+		// 			return res.redirect('/users');
+		// 		}
+		// 		else{
+		// 			 return res.send('password is wrong');
+        //
+		// 		}
+        //
+		// 	}
+		// }
 
-			if(users[i].email === req.body.email){
-
-				if(bcrypt.compareSync(req.body.password, users[i].password)){
-					res.cookie('userID',
-								req.body.email,
-								{signed: true});
-					res.cookie('displayName',
-								"Lissa Walzed",
-								{signed: true});
-					res.cookie('photo',
-								"",
-								{signed: true});
-
-					res.cookie('user', {
-						displayName:'Lissa walzer',
-						photo:""});
-
-					return res.redirect('/users');
-				}
-				else{
-					 return res.send('password is wrong');
-
-				}
-
-			}
-		}
-
-		res.send('User doesn\'t exists');
+		//res.send('User doesn\'t exists');
 	}
 
 });
