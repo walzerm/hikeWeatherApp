@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Find a Hike!</title>
+	<% include ../style%>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/userProfileStyle.css">
+</head>
+</head>
+<body>
+	<% include ../header %>
+	<br>
+	<br>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-8">
+					<!-- insert map here -->
+					<br>
+					<div class="jumbotron">
+						<%if(currentWeather){ %>
+							<p>
+						  		<%= currentWeather.weather[0].main %>
+							</p>
+							<p>
+							  	<%= currentWeather.main.temp %>
+
+							</p>
+						<%}%>
+						
+					</div>
+				</div>
+				<div class="col-md-4">
+					<form method="POST" action="/hikes">
+						<div class="form-group">
+							<label for="zipcode">Zipcode</label>
+							<input type="text" class="form-control"name="zipcode" id="zipcode">
+						</div>
+
+						<button type="submit" class="btn btn-danger btn-cog btn-block">Fine Me A Hike
+					   	</button>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% include ../footer %>
+</body>
+</html>
