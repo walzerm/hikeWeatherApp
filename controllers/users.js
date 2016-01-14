@@ -16,16 +16,7 @@ router.use(function ensureAuthenticated(req, res, next) {
 });
 
 router.get('/', function(req, res){
-	/*
-		find user in data base and send user to the user page
-	*/
-    //console.log(req);
-    // console.log(req.signedCookies);
-	//  knex('users').where('id', req.signedCookies.userID).first().then(function(user) {
-    //      res.render('users/user', {
-    //          user: user.name
-    //      })
-    //  })
+	
 	if(!res.locals.currentUser){
         console.log(req.user);
 		res.render('users/user',{

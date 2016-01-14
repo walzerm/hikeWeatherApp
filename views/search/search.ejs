@@ -17,7 +17,6 @@
 			<div class="col-md-12">
 				<div class="col-md-8">
 					<!-- insert map here -->
-					<br>
 					<div class="jumbotron">
 						<%if(currentWeather){ %>
 							<p>
@@ -32,20 +31,40 @@
 					</div>
 				</div>
 				<div class="col-md-4">
+				<div class="jumbotron">
 					<form method="POST" action="/hikes">
+					<label for="seach">Search for Hike</label>
 						<div class="form-group">
-							<label for="seach">Search for Hike</label>
-							<input type="text" class="form-control"name="search" id="search">
+							<label for="seach">Name</label>
+							<input type="search" class="form-control"name="search" id="search" placeholder="name">
 						</div>
+
+						<div class="form-group">
+							<label for="elevation">Elevation</label>
+
+							<select class="form-control" name="elevation" id="elevation">
+							  	<option>Easy</option>
+							  	<option>Meduim</option>
+							  	<option>Hard</option>
+							</select>
+						</div>
+						
 						<div class="form-group">
 							<label for="zipcode">Zipcode</label>
 							<input type="text" class="form-control"name="zipcode" id="zipcode">
 						</div>
 
-						<button type="submit" class="btn btn-danger btn-cog btn-block">Fine Me A Hike
+						<div class="form-group">
+							<label for="radius">Radius</label>
+							<input type="text" class="form-control"name="radius" id="radius">
+						</div>
+
+						<button type="submit" class="btn btn-danger btn-cog btn-block">Find Me A Hike
 					   	</button>
 
 					</form>
+				</div>
+					<br>
 					<%if(searchResults){%>
 						<%searchResults.forEach(function(result){%>
 							<p><%= result.name %></p>

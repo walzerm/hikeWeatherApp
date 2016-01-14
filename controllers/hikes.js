@@ -15,14 +15,32 @@ router.get('/', function(req, res, next){
 router.post('/', function(req, res, next){
 	
 	var searchResults = [];
+	searchForAHikde(req.body, req, res,function(searchResults,weather, error){
+		searchResults = searchResults;
+		if(!error){
+			res.render('search/search', {
+			currentWeather: weather,
+			searchResults:searchResults.rows
+		});
+		}
+		else{
+			console.log(error);
+			res.send(error);
+		}
+	});
+	
+});
 
-	var searchQuery = '\'%' + req.body.search +'%\''
+function searchForAHikde(params, req, res, callback){
+	var searchResults = [];
+
+	var searchQuery = '\'%' + params.search +'%\''
 	knex.raw('SELECT name FROM hikesinfo WHERE name ILIKE '+  searchQuery).then(function(results){
 		searchResults = results;
 	});
 
-	if(validator.zipCode(req.body.zipcode)){
-		res.cookie('zipcode', req.body.zipcode);
+	if(validator.zipCode(params.zipcode)){
+		res.cookie('zipcode', params.zipcode);
 		if(req.cookies.zipcode){
 
 			var apiURL = 'http://api.openweathermap.org/data/2.5/weather'
@@ -35,23 +53,13 @@ router.post('/', function(req, res, next){
 				var weather = JSON.parse(body);
 				console.log(weather);
 				console.log(searchResults.rows);
-				if(!error){
-					res.render('search/search', {
-						currentWeather: weather,
-						searchResults:searchResults.rows
-					});
-				}
-				else{
-					console.log(error);
-					res.send(error);
-				}
+				callback(searchResults, weather, error);
+				
 			});
 		}
 	}
 	else{
 		res.send('not a valid zipCode');
 	}
-	
-});
-
+}
 module.exports = router;
