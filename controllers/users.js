@@ -73,7 +73,10 @@ router.post('/', function(req,res){
 	res.redirect('/users');
 });
 
-
+router.post('/list/new', function(req, res) {
+    console.log('create a new list with ' + req.body.list + ' yay!!');
+    res.redirect('/users');
+})
 
 function addUserToDB(user, callback){
 	users.push({
