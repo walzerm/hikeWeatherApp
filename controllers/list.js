@@ -23,5 +23,11 @@ router.post('/new', function(req, res) {
 
 })
 
+router.delete('/delete', function(req, res) {
+    knex('fav_hikes_lists').where('id', req.body.hiddenName).first().del().then(function() {
+        res.redirect('/users');
+    });
+})
+
 
 module.exports = router;
