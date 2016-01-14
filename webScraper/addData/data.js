@@ -5,6 +5,7 @@ var file = '../rawData/hikesData.json';
 fs.readFile(file, function(err, data) {
     console.log(data);
     var hikeData = JSON.parse(data);
+    console.log(data);
     var insertObj = {};
 
     //Regular expressions to test for hike features
@@ -48,9 +49,9 @@ fs.readFile(file, function(err, data) {
             }
              //console.log(insertObj);
 
-         knex('hikesinfo').insert(insertObj).then(function() {
-             console.log('done');
-         });
+        //  knex('hikesinfo').insert(insertObj).then(function() {
+        //      console.log('done');
+        //  });
 
 
         }
