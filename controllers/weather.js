@@ -3,10 +3,10 @@ var router = express.Router();
 var request = require('request');
 
 router.get('/', function(req, res){
-	request('http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&APPID='+process.env['WEATHER_API_KEY'], function (error, response, body){
+	request('http://api.openweathermap.org/data/2.5/weather?zip=94040,us&APPID='+process.env['WEATHER_API_KEY'], function (error, response, body){
 		console.log('*************');
 		if(!error){
-			res.send(body);
+			res.send(weather);
 		}
 		else{
 			console.log(error);
