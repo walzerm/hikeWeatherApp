@@ -50,37 +50,31 @@ router.post('/signup', function(req, res){
     if(errormessages.length > 0){
         res.render('signup/signup', {
         	errorMessage: "Email And password combination is invalid"});
-    } else{
+    } 
+    else{
         knex('users').where('email', req.body.email).first().then(function(user) {
             if (!user) {
-                console.log('what');
                 var hash = bcrypt.hashSync(req.body.password, 8);
                 knex('users').insert({
                     name: req.body.name,
                     email: req.body.email.toLowerCase(),
                     password: hash
-                }).then(function() {
+                }).then(function(user) {
+                    // add user info to cookies
+                    res.cookie('user', {
+                        displayName: req.body.name,
+                        photo: ""
+                    });
+                    // added signed user ID to cookies
+                    res.cookie('userID', user.id, {signed: true});
                     res.redirect('/users');
-                })
+                });
 
-            } else {
+            } 
+            else {
                 res.send('user already exists');
             }
-        })
-    	/*
-		1 - find  user in db
-		2 - if user is in database, display error message
-		3 - else
-		4 - redirect to users/new
-		*/
-		// for(var i = 0; i < users.length; i++){
-		// 	if(users[i].email === req.body.email){
-		// 		res.send('user already exists');
-		// 	}
-		// 	else{
-		// 		res.redirect('/users/new');
-		// 	}
-		// }
+        });		
     }
 });
 
@@ -102,71 +96,31 @@ router.post('/signin', function(req,res){
         	errorMessage: "Shit ain't working, yo! Try again."});
     } else {
         knex('users').where('email', req.body.email.toLowerCase()).first().then(function(user) {
-            //console.log(user);
             if (!user) {
-                console.log('not a user');
                 res.render('signin/signin', {
                 	errorMessage: "Shit ain't working, yo! Try again."});
-            } else {
+            } 
+            else {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
-                    console.log('redirecting yo');
-                    console.log(user.id);
+                    res.cookie('user', {
+                        displayName: user.name,
+                        photo: ""
+                    });
                     res.cookie('userID', user.id, { signed: true });
-                    console.log(req.signedCookies);
                     res.redirect('/users');
                 } else {
                     res.render('signin/signin', {
                     	errorMessage: "Shit ain't working, yo! Try again."});
                 }
             }
-        })
-    	/*
-		1 - find  user in db
-		2 - if user is in database,
-		3 -  compare the hashed the password using bcrypt
-		4 - redirect to users/id
-		5 - else, display error
-		*/
-		// for(var i = 0; i < users.length; i++){
-        //
-		// 	if(users[i].email === req.body.email){
-        //
-		// 		if(bcrypt.compareSync(req.body.password, users[i].password)){
-		// 			res.cookie('userID',
-		// 						req.body.email,
-		// 						{signed: true});
-		// 			res.cookie('displayName',
-		// 						"Lissa Walzed",
-		// 						{signed: true});
-		// 			res.cookie('photo',
-		// 						"",
-		// 						{signed: true});
-        //
-		// 			res.cookie('user', {
-		// 				displayName:'Lissa walzer',
-		// 				photo:""});
-        //
-		// 			return res.redirect('/users');
-		// 		}
-		// 		else{
-		// 			 return res.send('password is wrong');
-        //
-		// 		}
-        //
-		// 	}
-		// }
+        });
 
-		//res.send('User doesn\'t exists');
 	}
 
 });
 
 //sign out
 router.get('/signout', function(req, res) {
-	/*
-	1 - clear cookie
-	2 - redirect to index page
-	*/
     req.logout();
     res.clearCookie('userID');
     res.clearCookie('user');
