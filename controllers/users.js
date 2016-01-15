@@ -36,13 +36,16 @@ router.get('/', function(req, res){
         })
 	}
 	else{
-        knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
-    		res.render('users/user',{
-      			user : res.locals.currentUser,
-      			photo: res.locals.currentUser.photo,
-                hikes: lists
-      		});
-        });
+        knex('users').where('id', req.signedCookies.userID).first().then(function(userPrimary) {
+            knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
+                res.render('users/user',{
+                    user : res.locals.currentUser,
+                    photo: res.locals.currentUser.photo,
+                    hikes: lists,
+                    description: userPrimary.description
+                });
+            });
+        })
 	}
 
 });
@@ -77,7 +80,9 @@ router.get('/description', function(req, res) {
             res.render('users/description', {user: user});
         })
     } else {
-        knex('')
+        knex('users').where('id', req.signedCookies.userID).first().then(function(user) {
+            res.render('users/description', {user: user});
+        })
     }
 
 })
