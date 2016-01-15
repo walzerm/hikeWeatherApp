@@ -22,7 +22,7 @@ router.get('/', function(req, res){
     //var userID = req.signedCookies.userID;
 
     //console.log(userID);
-    console.log(req.user.id);
+
 	if(!res.locals.currentUser){
         knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
             knex('fav_hikes_lists').where('user_id', userPrimary.id).then(function(lists) {
@@ -37,7 +37,7 @@ router.get('/', function(req, res){
 
 	}
 	else{
-        knex('fav_hikes_lists').where('user_id', userID).then(function(lists) {
+        knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
     		res.render('users/user',{
       			user : res.locals.currentUser,
       			photo: res.locals.currentUser.photo,
