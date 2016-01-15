@@ -9,7 +9,21 @@ var hikes = function(){
 }
 
 router.get('/', function(req, res, next){
-	res.render('search/search', {currentWeather:"", searchResults:[]});
+	var apiURL = 'http://api.openweathermap.org/data/2.5/weather'
+	var WEATHER_API_KEY = process.env['WEATHER_API_KEY'];
+	var zipcode = "98101";
+
+	var url = apiURL+'?zip='+zipcode+',us&APPID='+WEATHER_API_KEY;
+	
+	request(url, function (error, response, body){
+		var weather = JSON.parse(body);
+		console.log(weather);
+		res.render('search/search', {
+			currentWeather:weather, 
+			searchResults:[]
+		});
+	});
+	
 });
 
 router.post('/', function(req, res, next){
@@ -51,8 +65,8 @@ function searchForAHikde(params, req, res, callback){
 
 	if(validator.zipCode(params.zipcode)){
 		res.cookie('zipcode', params.zipcode);
-		if(req.cookies.zipcode){
-
+		if(params.zipcode){
+			console.log('Im insdie req.cookies if');
 			var apiURL = 'http://api.openweathermap.org/data/2.5/weather'
 			var WEATHER_API_KEY = process.env['WEATHER_API_KEY'];
 			var zipcode = req.cookies.zipcode;
@@ -90,15 +104,21 @@ function searchForAHikde(params, req, res, callback){
 						// create elevation query
 						var elevationQuery = ' AND elevation IS NOT NULL AND elevation '  + elevation  ; 
 						// make the query request
-						knex.raw('SELECT name FROM hikesinfo WHERE '+ longQuery + nameQuery + elevationQuery).then(function(stuffs){
+						knex.raw('SELECT name,longitude,latitude FROM hikesinfo WHERE '+ longQuery + nameQuery + elevationQuery).then(function(stuffs){
 							// save results
 							searchResults = searchResults.concat(stuffs.rows);
+							if(searchResults.count == 0){
+								console.log('no results');
+							}
 							// pass it back to route
 							callback(searchResults, weather, error);
 						});
 					}
 				});				
 			});			
+		}
+		else{
+			res.send('no zipcode');
 		}
 	}
 	else{

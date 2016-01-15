@@ -7,7 +7,11 @@
 </head>
 <body>
 	<% include ../header%>
-	<h2><%= errorMessage %></h2>
+	<%if(errorMessage) {%>
+		<h2><%= errorMessage %></h2>
+	<%}%>
+
+	
 	<% include signinForm%>
 
 	<% include ../footer%>
