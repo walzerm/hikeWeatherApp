@@ -47,12 +47,10 @@ fs.readFile(file, function(err, data) {
                     }
                 }
             }
-             console.log(insertObj);
 
          knex('hikesinfo').insert(insertObj).then(function() {
              console.log('done');
          });
-
 
         }
     }

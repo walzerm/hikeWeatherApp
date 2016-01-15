@@ -3,7 +3,7 @@ var router = express.Router();
 var users = require('../mockupData/mockUpUsers').users;
 var knex = require('../db/knex');
 
-// uncomment code here
+
 // check if user is logged in with either oAuth or auth
 router.use(function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated() || res.locals.currentUser) {
@@ -16,30 +16,36 @@ router.use(function ensureAuthenticated(req, res, next) {
 });
 
 router.get('/', function(req, res){
+
+	/*
+		find user in data base and send user to the user page
+	*/
+
     var userID = req.signedCookies.userID;
 
 	if(!res.locals.currentUser){
-        console.log('here');
-        knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
-            res.render('users/user',{
-      			user : req.user,
-      			photo: req.user.photos[0].value,
-                hikes: lists
-      			});
-        });
-
+        knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
+            knex('fav_hikes_lists').where('user_id', userPrimary.id).then(function(lists) {
+                res.render('users/user',{
+                    user : req.user,
+                    photo: req.user.photos[0].value,
+                    hikes: lists,
+                    description: userPrimary.description
+                    });
+            });
+        })
 	}
 	else{
-        console.log(req.signedCookies);
-        console.log('here instead');
-        knex('fav_hikes_lists').where('user_id', userID).then(function(lists) {
-            console.log(lists);
-    		res.render('users/user',{
-      			user : res.locals.currentUser,
-      			photo: res.locals.currentUser.photo,
-                hikes: lists
-      		});
-        });
+        knex('users').where('id', req.signedCookies.userID).first().then(function(userPrimary) {
+            knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
+                res.render('users/user',{
+                    user : res.locals.currentUser,
+                    photo: res.locals.currentUser.photo,
+                    hikes: lists,
+                    description: userPrimary.description
+                });
+            });
+        })
 	}
 
 });
@@ -67,6 +73,26 @@ router.post('/', function(req,res){
 	res.redirect('/users');
 });
 
+router.get('/description', function(req, res) {
+
+    if (!res.locals.currentUser) {
+        knex('users').where('facebook_id', req.user.id).first().then(function(user) {
+            res.render('users/description', {user: user});
+        })
+    } else {
+        knex('users').where('id', req.signedCookies.userID).first().then(function(user) {
+            res.render('users/description', {user: user});
+        })
+    }
+
+})
+
+router.post('/edit', function(req, res) {
+    knex('users').where('id', req.body.hiddenID).update({description: req.body.description}).then(function() {
+        res.redirect('/users');
+    });
+
+})
 
 function addUserToDB(user, callback){
 	users.push({

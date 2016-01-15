@@ -6,23 +6,48 @@ var knex = require('../db/knex');
 
 
 router.post('/new', function(req, res) {
+var userid;
 
-    knex('fav_hikes_lists').where({
-        list_name: req.body.list,
-        user_id: req.signedCookies.userID
-    }).first().then(function(list) {
-        if(!list) {
-            knex('fav_hikes_lists').insert({
+    //Checks to see if the user is logged in via facebook
+    if (!res.locals.currentUser) {
+        knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
+            userid = userPrimary.id;
+
+            knex('fav_hikes_lists').where({
                 list_name: req.body.list,
-                user_id: req.signedCookies.userID
-            }).then(function() {
-                res.redirect('/users');
-            });
-        } else {
-            res.redirect('/users');
-        }
-    })
+                user_id: userPrimary.id
+            }).first().then(function(list) {
 
+                if (!list) {
+                    knex('fav_hikes_lists').insert({
+                        list_name: req.body.list,
+                        user_id: userid
+                    }).then(function() {
+                        res.redirect('/users');
+                    })
+                } else {
+                    res.redirect('/users');
+                }
+            })
+        })
+        
+    } else {
+        knex('fav_hikes_lists').where({
+            list_name: req.body.list,
+            user_id: req.signedCookies.userID
+        }).first().then(function(list) {
+            if(!list) {
+                knex('fav_hikes_lists').insert({
+                    list_name: req.body.list,
+                    user_id: req.signedCookies.userID
+                }).then(function() {
+                    res.redirect('/users');
+                });
+            } else {
+                res.redirect('/users');
+            }
+        })
+    }
 })
 
 router.delete('/delete', function(req, res) {

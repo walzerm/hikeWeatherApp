@@ -18,10 +18,10 @@
 					<br>
 					<div class="jumbotron">
 						<h4><%=user.displayName%></h4>
-					  	<p> <small>
-					  	  Microdosing tilde flexitarian, meggings franzen tousled etsy biodiesel quinoa. Cold-pressed cray retro authentic. Listicle humblebrag hoodie roof party, bicycle rights asymmetrical you probably haven't heard of them.
-					  	  </small>
-					  	</p>
+                        <p>
+                            <%= description %>
+                        </p>
+                        <a href="/users/description">Edit your description</a>
 					</div>
 				</div>
 				<div class="col-md-9">
@@ -33,7 +33,7 @@
 					  	<h4> List of Favorite Hikes!</h4>
                         <form action="/list/new" method="post">
                             <div class="form-group">
-                                <input type="test" name="list" value="">
+                                <input type="text" name="list" value="">
                                 <input type="submit" name="sumbit" value="Create a new list">
                             </div>
                         </form>
