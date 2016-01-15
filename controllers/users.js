@@ -71,7 +71,13 @@ router.post('/', function(req,res){
 });
 
 router.get('/description', function(req, res) {
-    res.render('users/description');
+
+    if (!res.locals.currentUser) {
+        knex('users').where('facebook_id', req.user.id).first().then(function(user) {
+            res.render('users/description', {user: user});
+        })
+    }
+
 })
 
 
