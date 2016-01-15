@@ -33,8 +33,21 @@ router.post('/', function(req, res, next){
 
 function searchForAHikde(params, req, res, callback){
 	var searchResults = [];
-
 	var searchQuery = '\'%' + params.search +'%\''
+	/*
+		*** elevation ***
+		easy < 500 ft
+		meduim > 500ft && < 1000 ft
+		hard > 1000ft
+	*/
+	var elevationToValues = {
+		'Easy': '< 500',
+		'Meduim': '> 500 AND elevation < 1000',
+		'Hard': '> 1000'
+	}
+
+	var elevation = elevationToValues[params.elevation];
+	console.log(elevation);
 
 	if(validator.zipCode(params.zipcode)){
 		res.cookie('zipcode', params.zipcode);
@@ -74,8 +87,10 @@ function searchForAHikde(params, req, res, callback){
 						var longQuery = returnedQuery.replace(/!/g,'NOT');
 						// create filtering by name query
 						var nameQuery = ' AND name ILIKE ' + searchQuery;
+						// create elevation query
+						var elevationQuery = ' AND elevation IS NOT NULL AND elevation '  + elevation  ; 
 						// make the query request
-						knex.raw('SELECT name FROM hikesinfo WHERE '+ longQuery + nameQuery).then(function(stuffs){
+						knex.raw('SELECT name FROM hikesinfo WHERE '+ longQuery + nameQuery + elevationQuery).then(function(stuffs){
 							// save results
 							searchResults = searchResults.concat(stuffs.rows);
 							// pass it back to route

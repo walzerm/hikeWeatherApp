@@ -3,9 +3,9 @@ exports.up = function(knex, Promise) {
     return knex.schema.createTable('hikesinfo', function(table) {
         table.increments();
         table.string('name');
-        table.string('length');
-        table.string('elevation');
-        table.string('highPoint');
+        table.float('length',8,5);
+        table.float('elevation',8,5);
+        table.float('highPoint',8,5);
         table.string('url');
         table.text('description');
         table.decimal('latitude', 10, 5);
