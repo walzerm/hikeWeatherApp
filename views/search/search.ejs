@@ -100,19 +100,19 @@ function initialize() {
 					   	</button>
 
 					   	<br>
-
-						<%if(searchResults){%>
-							<%searchResults.forEach(function(result){%>
-								<p> <small><%= result.name %> </small></p>
-                                <form action="/users/favourite" method="post">
-                                    <input type="hidden" name="hiddenName" value="<%= result.name %>">
-                                    <input type="submit" class="btn btn-danger btn-cog" name="name" value="Favorite">
-                                </form>
-								<!-- <a href="" class="btn btn-danger btn-cog">Favourite</a> -->
-
-							<%})%>
-						<%}%>
 					</form>
+
+                    <%if(searchResults){%>
+                        <%searchResults.forEach(function(result){%>
+                            <p> <small><%= result.name %> </small></p>
+                            <form action="/users/favourite" method="post">
+                                <input type="hidden" name="hiddenName" value="<%= result.name %>">
+                                <input type="submit" class="btn btn-danger btn-cog" name="name" value="Favorite">
+                            </form>
+                            <!-- <a href="" class="btn btn-danger btn-cog">Favourite</a> -->
+
+                        <%})%>
+                    <%}%>
 				</div>
 
 
