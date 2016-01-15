@@ -99,7 +99,7 @@ var setUserNameLocal = function (req, res, next) {
   res.locals.currentUser = req.cookies.user
   next()
 }
-
+ 
 // set user cookie
 app.use(setUserNameLocal);
 

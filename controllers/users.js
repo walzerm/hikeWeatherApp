@@ -16,9 +16,12 @@ router.use(function ensureAuthenticated(req, res, next) {
 });
 
 router.get('/', function(req, res){
+
 	/*
 		find user in data base and send user to the user page
 	*/
+
+    var userID = req.signedCookies.userID;
 
 	if(!res.locals.currentUser){
         knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
