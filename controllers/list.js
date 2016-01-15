@@ -7,17 +7,17 @@ var knex = require('../db/knex');
 
 router.post('/new', function(req, res) {
 var userid;
-//Finish so that FB users also get lists, need to get user id from the facebook to add to lists table
+
+    //Checks to see if the user is logged in via facebook
     if (!res.locals.currentUser) {
         knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
-            console.log('I am indeed a fb user');
-            console.log(userPrimary.id);
             userid = userPrimary.id;
+
             knex('fav_hikes_lists').where({
                 list_name: req.body.list,
                 user_id: userPrimary.id
             }).first().then(function(list) {
-                console.log('I got to insert');
+
                 if (!list) {
                     knex('fav_hikes_lists').insert({
                         list_name: req.body.list,
@@ -30,6 +30,7 @@ var userid;
                 }
             })
         })
+        
     } else {
         knex('fav_hikes_lists').where({
             list_name: req.body.list,

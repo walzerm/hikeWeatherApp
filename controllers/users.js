@@ -3,7 +3,7 @@ var router = express.Router();
 var users = require('../mockupData/mockUpUsers').users;
 var knex = require('../db/knex');
 
-// uncomment code here
+
 // check if user is logged in with either oAuth or auth
 router.use(function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated() || res.locals.currentUser) {
@@ -19,9 +19,6 @@ router.get('/', function(req, res){
 	/*
 		find user in data base and send user to the user page
 	*/
-    //var userID = req.signedCookies.userID;
-
-    //console.log(userID);
 
 	if(!res.locals.currentUser){
         knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
@@ -33,8 +30,6 @@ router.get('/', function(req, res){
                     });
             });
         })
-
-
 	}
 	else{
         knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
