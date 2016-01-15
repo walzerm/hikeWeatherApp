@@ -59,7 +59,7 @@ function searchForAHikde(params, req, res, callback){
 	*/
 	var elevationToValues = {
 		'Easy': '< 500',
-		'Meduim': '> 500 AND elevation < 1000',
+		'Medium': '> 500 AND elevation < 1000',
 		'Hard': '> 1000'
 	}
 
