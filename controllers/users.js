@@ -36,6 +36,8 @@ router.get('/', function(req, res){
         })
 	}
 	else{
+        console.log('cookie');
+        console.log(req.signedCookies.userID);
         knex('users').where('id', req.signedCookies.userID).first().then(function(userPrimary) {
             knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
                 res.render('users/user',{
