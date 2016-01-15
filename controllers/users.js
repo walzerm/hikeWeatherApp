@@ -71,7 +71,7 @@ router.post('/', function(req,res){
 });
 
 router.get('/description', function(req, res) {
-    res.send('descriptions!');
+    res.render('users/description');
 })
 
 
