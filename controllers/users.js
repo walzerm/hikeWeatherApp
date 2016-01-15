@@ -19,24 +19,25 @@ router.get('/', function(req, res){
 	/*
 		find user in data base and send user to the user page
 	*/
-    var userID = req.signedCookies.userID;
+    //var userID = req.signedCookies.userID;
 
+    //console.log(userID);
+    console.log(req.user.id);
 	if(!res.locals.currentUser){
-        console.log('here');
-        knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
-            res.render('users/user',{
-      			user : req.user,
-      			photo: req.user.photos[0].value,
-                hikes: lists
-      			});
-        });
+        knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
+            knex('fav_hikes_lists').where('user_id', userPrimary.id).then(function(lists) {
+                res.render('users/user',{
+                    user : req.user,
+                    photo: req.user.photos[0].value,
+                    hikes: lists
+                    });
+            });
+        })
+
 
 	}
 	else{
-        console.log(req.signedCookies);
-        console.log('here instead');
         knex('fav_hikes_lists').where('user_id', userID).then(function(lists) {
-            console.log(lists);
     		res.render('users/user',{
       			user : res.locals.currentUser,
       			photo: res.locals.currentUser.photo,

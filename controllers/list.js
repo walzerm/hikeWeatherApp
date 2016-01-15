@@ -7,6 +7,23 @@ var knex = require('../db/knex');
 
 router.post('/new', function(req, res) {
 
+    var id;
+//Finish so that FB users also get lists, need to get user id from the facebook to add to lists table
+    if (!res.locals.currentUser) {
+        knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
+            knex('fav_hikes_lists').where('user_id', userPrimary.id).then(function(lists) {
+                res.render('users/user',{
+                    user : req.user,
+                    photo: req.user.photos[0].value,
+                    hikes: lists
+                    });
+            });
+        })
+    } else {
+        knex('users').where('facebook_id', )
+    }
+
+    console.log(req.user.id);
     knex('fav_hikes_lists').where({
         list_name: req.body.list,
         user_id: req.signedCookies.userID
