@@ -76,10 +76,18 @@ router.get('/description', function(req, res) {
         knex('users').where('facebook_id', req.user.id).first().then(function(user) {
             res.render('users/description', {user: user});
         })
+    } else {
+        knex('')
     }
 
 })
 
+router.post('/edit', function(req, res) {
+    knex('users').where('id', req.body.hiddenID).update({description: req.body.description}).then(function() {
+        res.redirect('/users');
+    });
+
+})
 
 function addUserToDB(user, callback){
 	users.push({

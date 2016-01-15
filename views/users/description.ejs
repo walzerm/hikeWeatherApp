@@ -18,7 +18,8 @@
                         <br>
         				<form method="POST" action="/users/edit">
         					<div class="form-group">
-        						<textarea name="name" rows="8" cols="81"> <%= user.description %> </textarea>
+                                <input type="hidden" name="hiddenID" value="<%= user.id %>">
+        						<textarea name="description" rows="8" cols="81"> <%= user.description %> </textarea>
         					</div>
         					<button type="submit" class="btn btn-danger btn-cog btn-block">Update
         			    	</button>
