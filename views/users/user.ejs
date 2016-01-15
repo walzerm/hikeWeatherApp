@@ -31,18 +31,38 @@
 					<br>
 					<div class="jumbotron">
 					  	<h4> List of Favorite Hikes!</h4>
-					  	<p> 
-					  		<ul>
-					  			<li>Microdosing tilde flexitarian, meggings franzen tousled</li>
-					  		   	<li>etsy biodiesel quinoa. Cold-pressed cray retro authentic. </li>
-					  		   	<li>Listicle humblebrag hoodie roof party, bicycle rights asymmetrical you probably haven't heard of them.</li>
-					  		   	<li>Polaroid leggings umami, narwhal locavore echo park slow-carb YOLO.</li>
-					  		   	<li> Marfa VHS gastropub letterpress messenger bag.</li>
-					  		   	<li>Fixie seitan helvetica, banh mi butcher put a bird on it keytar tote bag franzen pop-up tousled skateboard.</li> 
-					  		   	<li>Chicharrones yr four dollar toast irony, paleo chia brooklyn.</li>
-					  		 </ul>
-					  	</p>
-					  	
+                        <form action="/list/new" method="post">
+                            <div class="form-group">
+                                <input type="test" name="list" value="">
+                                <input type="submit" name="sumbit" value="Create a new list">
+                            </div>
+                        </form>
+                        <br>
+				  		<table>
+                            <% hikes.forEach(function(lists) { %>
+				  		    <tr>
+				  		        <td>
+				  		            <p>
+				  		                <%= lists.list_name %>
+				  		            </p>
+				  		        </td>
+                                <td>
+                                    <form method="post" action="/list/hikes" >
+                                        <input type="hidden" name="hiddenID" value="<%= lists.id %>">
+                                        <input type="hidden" name="hiddenName" value="<%= lists.list_name %>">
+                                        <input type="submit" name="name" value="See Hikes">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="post" action="/list/delete?_method=DELETE" >
+                                        <input type="hidden" name="hiddenName" value="<%= lists.id %>">
+                                        <input type="submit" name="name" value="Delete List">
+                                    </form>
+                                </td>
+				  		    </tr>
+                            <% }) %>
+				  		</table>
+
 					</div>
 				</div>
 			</div>

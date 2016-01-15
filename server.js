@@ -82,7 +82,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-      
+
       // To keep the example simple, the user's Facebook profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Facebook account with a user record in your database,
@@ -107,6 +107,7 @@ app.use(setUserNameLocal);
 app.use('/auth', router.auth);
 app.use('/users', router.users);
 app.use('/hikes', router.hikes);
+app.use('/list', router.list);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

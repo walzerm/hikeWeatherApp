@@ -16,19 +16,30 @@ router.use(function ensureAuthenticated(req, res, next) {
 });
 
 router.get('/', function(req, res){
-	
+    var userID = req.signedCookies.userID;
+
 	if(!res.locals.currentUser){
-        console.log(req.user);
-		res.render('users/user',{
-  			user : req.user,
-  			photo: req.user.photos[0].value
-  			});
+        console.log('here');
+        knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
+            res.render('users/user',{
+      			user : req.user,
+      			photo: req.user.photos[0].value,
+                hikes: lists
+      			});
+        });
+
 	}
 	else{
-		res.render('users/user',{
-  			user : res.locals.currentUser,
-  			photo: res.locals.currentUser.photo
-  		});
+        console.log(req.signedCookies);
+        console.log('here instead');
+        knex('fav_hikes_lists').where('user_id', userID).then(function(lists) {
+            console.log(lists);
+    		res.render('users/user',{
+      			user : res.locals.currentUser,
+      			photo: res.locals.currentUser.photo,
+                hikes: lists
+      		});
+        });
 	}
 
 });
@@ -51,19 +62,10 @@ router.post('/', function(req,res){
 		5 -  redirect to '/:id' when successfull
 	*/
 
-	// addUserToDB(req.body, function(user){
-	// 				res.cookie('userID',
-	// 							req.body.email,
-	// 							{signed: true});
-	// 				res.send('success');
-	// 			});
-
-	// res.send('successfull user insertion');
 	console.log('**********');
 	console.log(req.body);
 	res.redirect('/users');
 });
-
 
 
 function addUserToDB(user, callback){

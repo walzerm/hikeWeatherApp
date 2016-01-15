@@ -50,7 +50,7 @@ router.post('/signup', function(req, res){
     if(errormessages.length > 0){
         res.render('signup/signup', {
         	errorMessage: "Email And password combination is invalid"});
-    } 
+    }
     else{
         knex('users').where('email', req.body.email).first().then(function(user) {
             if (!user) {
@@ -70,11 +70,11 @@ router.post('/signup', function(req, res){
                     res.redirect('/users');
                 });
 
-            } 
+            }
             else {
                 res.send('user already exists');
             }
-        });		
+        });
     }
 });
 
@@ -99,7 +99,7 @@ router.post('/signin', function(req,res){
             if (!user) {
                 res.render('signin/signin', {
                 	errorMessage: "Shit ain't working, yo! Try again."});
-            } 
+            }
             else {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
                     res.cookie('user', {
