@@ -20,7 +20,7 @@ router.post('/', function(req, res, next){
 		if(!error){
 			res.render('search/search', {
 			currentWeather: weather,
-			searchResults:searchResults.rows
+			searchResults:searchResults
 		});
 		}
 		else{
@@ -35,9 +35,6 @@ function searchForAHikde(params, req, res, callback){
 	var searchResults = [];
 
 	var searchQuery = '\'%' + params.search +'%\''
-	knex.raw('SELECT name FROM hikesinfo WHERE name ILIKE '+  searchQuery).then(function(results){
-		searchResults = results;
-	});
 
 	if(validator.zipCode(params.zipcode)){
 		res.cookie('zipcode', params.zipcode);
@@ -48,14 +45,45 @@ function searchForAHikde(params, req, res, callback){
 			var zipcode = req.cookies.zipcode;
 
 			var url = apiURL+'?zip='+zipcode+',us&APPID='+WEATHER_API_KEY;
-
+			
 			request(url, function (error, response, body){
 				var weather = JSON.parse(body);
 				console.log(weather);
-				console.log(searchResults.rows);
-				callback(searchResults, weather, error);
-				
-			});
+				// get  location from weather response
+				/*
+					 the returned object will be like this
+					 { lon: -122.27, lat: 37.87 }
+				*/
+				var location = weather.coord;
+				// get the latitude form location
+				var latitude = location.lat;
+				// get the longitude from location
+				var longitude = location.lon;
+				// set the unit
+				var unit = 'mile';
+				//get the dictance (radius)
+				var distance = params.radius;
+				// make the url 
+				var zipcodeapiURL ='https://www.zipcodeapi.com/rest/'+process.env['ZIPCODE_API_KEY']+'/radius-sql.json/'+latitude+'/'+longitude+'/degrees/'+distance+'/'+unit+'/latitude/longitude/1';
+				// send request to API
+				request(zipcodeapiURL, function(error,response,body){
+					if(!error){
+						// parse the query 
+						var returnedQuery = JSON.parse(body).where_clause;
+						//replace every ! with NOT
+						var longQuery = returnedQuery.replace(/!/g,'NOT');
+						// create filtering by name query
+						var nameQuery = ' AND name ILIKE ' + searchQuery;
+						// make the query request
+						knex.raw('SELECT name FROM hikesinfo WHERE '+ longQuery + nameQuery).then(function(stuffs){
+							// save results
+							searchResults = searchResults.concat(stuffs.rows);
+							// pass it back to route
+							callback(searchResults, weather, error);
+						});
+					}
+				});				
+			});			
 		}
 	}
 	else{
