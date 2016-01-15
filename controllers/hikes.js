@@ -9,25 +9,26 @@ var hikes = function(){
 }
 
 router.get('/', function(req, res, next){
+    console.log('im here');
 	var apiURL = 'http://api.openweathermap.org/data/2.5/weather'
 	var WEATHER_API_KEY = process.env['WEATHER_API_KEY'];
 	var zipcode = "98101";
 
 	var url = apiURL+'?zip='+zipcode+',us&APPID='+WEATHER_API_KEY;
-	
+
 	request(url, function (error, response, body){
 		var weather = JSON.parse(body);
 		console.log(weather);
 		res.render('search/search', {
-			currentWeather:weather, 
+			currentWeather:weather,
 			searchResults:[]
 		});
 	});
-	
+
 });
 
 router.post('/', function(req, res, next){
-	
+
 	var searchResults = [];
 	searchForAHikde(req.body, req, res,function(searchResults,weather, error){
 		searchResults = searchResults;
@@ -42,7 +43,7 @@ router.post('/', function(req, res, next){
 			res.send(error);
 		}
 	});
-	
+
 });
 
 function searchForAHikde(params, req, res, callback){
@@ -71,10 +72,12 @@ function searchForAHikde(params, req, res, callback){
 			var WEATHER_API_KEY = process.env['WEATHER_API_KEY'];
 			var zipcode = req.cookies.zipcode;
 
-			var url = apiURL+'?zip='+zipcode+',us&APPID='+WEATHER_API_KEY;
-			
+			//var url = apiURL+'?zip='+zipcode+',us&APPID='+WEATHER_API_KEY;
+            var url = apiURL+'?zip='+params.zipcode+',us&APPID='+WEATHER_API_KEY;
 			request(url, function (error, response, body){
+                debugger;
 				var weather = JSON.parse(body);
+                console.log('THIS IS THE WEATHER');
 				console.log(weather);
 				// get  location from weather response
 				/*
@@ -82,6 +85,7 @@ function searchForAHikde(params, req, res, callback){
 					 { lon: -122.27, lat: 37.87 }
 				*/
 				var location = weather.coord;
+                console.log(weather.coord);
 				// get the latitude form location
 				var latitude = location.lat;
 				// get the longitude from location
@@ -90,19 +94,19 @@ function searchForAHikde(params, req, res, callback){
 				var unit = 'mile';
 				//get the dictance (radius)
 				var distance = params.radius;
-				// make the url 
+				// make the url
 				var zipcodeapiURL ='https://www.zipcodeapi.com/rest/'+process.env['ZIPCODE_API_KEY']+'/radius-sql.json/'+latitude+'/'+longitude+'/degrees/'+distance+'/'+unit+'/latitude/longitude/1';
 				// send request to API
 				request(zipcodeapiURL, function(error,response,body){
 					if(!error){
-						// parse the query 
+						// parse the query
 						var returnedQuery = JSON.parse(body).where_clause;
 						//replace every ! with NOT
 						var longQuery = returnedQuery.replace(/!/g,'NOT');
 						// create filtering by name query
 						var nameQuery = ' AND name ILIKE ' + searchQuery;
 						// create elevation query
-						var elevationQuery = ' AND elevation IS NOT NULL AND elevation '  + elevation  ; 
+						var elevationQuery = ' AND elevation IS NOT NULL AND elevation '  + elevation  ;
 						// make the query request
 						knex.raw('SELECT name,longitude,latitude FROM hikesinfo WHERE '+ longQuery + nameQuery + elevationQuery).then(function(stuffs){
 							// save results
@@ -114,8 +118,8 @@ function searchForAHikde(params, req, res, callback){
 							callback(searchResults, weather, error);
 						});
 					}
-				});				
-			});			
+				});
+			});
 		}
 		else{
 			res.send('no zipcode');
