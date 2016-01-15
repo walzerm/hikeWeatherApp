@@ -29,7 +29,8 @@ router.get('/', function(req, res){
                 res.render('users/user',{
                     user : req.user,
                     photo: req.user.photos[0].value,
-                    hikes: lists
+                    hikes: lists,
+                    description: userPrimary.description
                     });
             });
         })
@@ -68,6 +69,10 @@ router.post('/', function(req,res){
 	console.log(req.body);
 	res.redirect('/users');
 });
+
+router.get('/description', function(req, res) {
+    res.send('descriptions!');
+})
 
 
 function addUserToDB(user, callback){
