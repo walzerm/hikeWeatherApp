@@ -30,7 +30,7 @@ var userid;
                 }
             })
         })
-        
+
     } else {
         knex('fav_hikes_lists').where({
             list_name: req.body.list,
@@ -57,8 +57,11 @@ router.delete('/delete', function(req, res) {
 })
 
 router.post('/hikes', function(req, res) {
-    knex('fav_hikes').where('id', req.body.hiddenID).then(function(hikes) {
-        res.render('hikes/hikes', {list_name: req.body.hiddenName});
+    knex('fav_hikes').where('list_id', req.body.hiddenID).then(function(hikes) {
+        res.render('hikes/hikes', {
+            list_name: req.body.hiddenName,
+            hikes: hikes
+        });
 
     })
 })

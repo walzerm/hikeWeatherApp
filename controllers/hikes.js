@@ -19,6 +19,7 @@ router.get('/', function(req, res, next){
 	request(url, function (error, response, body){
 		var weather = JSON.parse(body);
 		console.log(weather);
+
 		res.render('search/search', {
 			currentWeather:weather,
 			searchResults:[]
@@ -45,6 +46,7 @@ router.post('/', function(req, res, next){
 	});
 
 });
+
 
 function searchForAHikde(params, req, res, callback){
 	var searchResults = [];
@@ -115,6 +117,8 @@ function searchForAHikde(params, req, res, callback){
 								console.log('no results');
 							}
 							// pass it back to route
+                            console.log('SEARCH RESULTS');
+                            console.log(searchResults);
 							callback(searchResults, weather, error);
 						});
 					}
