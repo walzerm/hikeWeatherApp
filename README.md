@@ -1,5 +1,5 @@
 ##Take A Hike
-
+![](assets/images/landingPage.png)
 ### Project Description
 
 A CRUD app, made by [Lissa Walzer](https://github.com/walzerm) and [Halah Al Shaikhly](https://github.com/HalahRaadSalih) that gives users recommendations for local hikes in WA based on current weather conditions.
