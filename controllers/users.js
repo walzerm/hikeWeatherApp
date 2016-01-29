@@ -36,6 +36,8 @@ router.get('/', function(req, res){
         })
 	}
 	else{
+        console.log('cookie');
+        console.log(req.signedCookies.userID);
         knex('users').where('id', req.signedCookies.userID).first().then(function(userPrimary) {
             knex('fav_hikes_lists').where('user_id', req.signedCookies.userID).then(function(lists) {
                 res.render('users/user',{
@@ -92,6 +94,25 @@ router.post('/edit', function(req, res) {
         res.redirect('/users');
     });
 
+})
+
+router.post('/favourite', function(req, res) {
+    if (!res.locals.currentUser) {
+        knex('users').where('facebook_id', req.user.id).first().then(function(userPrimary) {
+            knex('fav_hikes_lists').where('user_id', userPrimary.id).first().then(function(lists) {
+                knex('hikesinfo').where('name', req.body.hiddenName).first().then(function(hike) {
+                    knex('fav_hikes').insert({
+                        list_id: lists.id,
+                        hike_id: hike.id,
+                        hike_url: hike.url
+                    }).then(function() {
+                        res.redirect('/users');
+                    })
+                })
+            });
+        })
+
+    }
 })
 
 function addUserToDB(user, callback){

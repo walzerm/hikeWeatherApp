@@ -53,22 +53,29 @@ router.post('/signup', function(req, res){
     }
     else{
         knex('users').where('email', req.body.email).first().then(function(user) {
+            console.log(req.body.email);
+            console.log(user);
             if (!user) {
+
                 var hash = bcrypt.hashSync(req.body.password, 8);
-                knex('users').insert({
-                    name: req.body.name,
-                    email: req.body.email.toLowerCase(),
-                    password: hash
-                }).then(function(user) {
-                    // add user info to cookies
-                    res.cookie('user', {
-                        displayName: req.body.name,
-                        photo: ""
+                knex('users').insert(
+                    {name: req.body.name,
+                    email:req.body.email.toLowerCase(),
+                    password: hash}).returning('id').then(function(id){
+                        console.log('I\'m inside insert');
+                        console.log(id[0]);
+                        res.cookie('user', {
+                                displayName: req.body.name,
+                                photo: ""
+                            });
+                            // added signed user ID to cookies
+
+                            res.cookie('userID', id[0], { signed: true });
+
+                            res.redirect('/users');
                     });
-                    // added signed user ID to cookies
-                    res.cookie('userID', user.id, {signed: true});
-                    res.redirect('/users');
-                });
+
+                // });
 
             }
             else {

@@ -6,7 +6,31 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/userProfileStyle.css">
 	<script src="http://maps.googleapis.com/maps/api/js"></script>
-	
+	<script>
+function initialize() {
+		var center = new google.maps.LatLng(47.620499,-122.350876);
+	  	var mapProp = {
+		    center:center,
+		    zoom:5,
+		    mapTypeId:google.maps.MapTypeId.ROADMAP
+	  	};
+
+	  	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+	  	var marker=new google.maps.Marker({
+  			position:center,
+  		});
+
+		marker.setMap(map);
+		var infowindow = new google.maps.InfoWindow({
+  			content:"You're here!"
+  		});
+
+		infowindow.open(map,marker);
+		 var locations = [];
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 </head>
 </head>
 <body>
@@ -17,7 +41,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="col-md-8">					
+				<div class="col-md-8">
 					<div class="jumbotron">
 						<div class="col-md-4">
 							<i class="fa fa-sun-o fa-cog fa-5x"></i>
@@ -30,9 +54,9 @@
 							  	<%= currentWeather.weather[0].main %>
 								</p>
 								<p>
-								 	<small> 	
+								 	<small>
 								 		<%= currentWeather.main.temp %>
-								 	</small>	
+								 	</small>
 								</p>
 							<%}%>
 						</div>
@@ -46,7 +70,7 @@
 	var locations = "<%= searchResults %>";
 	console.log(locations);
 
-	// function initialize() { 
+	// function initialize() {
 		var center = new google.maps.LatLng(47.620499,-122.350876);
 	  	var mapProp = {
 		    center:center,
@@ -85,7 +109,7 @@
             }
           })(marker, i));
         }
-	// }	
+	// }
 	// google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 				</div>
@@ -103,11 +127,11 @@
 
 							<select class="form-control" name="elevation" id="elevation">
 							  	<option>Easy</option>
-							  	<option>Meduim</option>
+							  	<option>Medium</option>
 							  	<option>Hard</option>
 							</select>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="zipcode">Zipcode</label>
 							<input type="text" class="form-control"name="zipcode" id="zipcode">
@@ -122,17 +146,21 @@
 					   	</button>
 
 					   	<br>
-
-						<%if(searchResults){%>
-							<%searchResults.forEach(function(result){%>
-								<p> <small><%= result.name %> </small></p>
-								<a href="" class="btn btn-danger btn-cog">Favourite</a>
-
-							<%})%>
-						<%}%>
 					</form>
+
+                    <%if(searchResults){%>
+                        <%searchResults.forEach(function(result){%>
+                            <p> <small><%= result.name %> </small></p>
+                            <form action="/users/favourite" method="post">
+                                <input type="hidden" name="hiddenName" value="<%= result.name %>">
+                                <input type="submit" class="btn btn-danger btn-cog" name="name" value="Favorite">
+                            </form>
+                            <!-- <a href="" class="btn btn-danger btn-cog">Favourite</a> -->
+
+                        <%})%>
+                    <%}%>
 				</div>
-					
+
 
 				</div>
 			</div>

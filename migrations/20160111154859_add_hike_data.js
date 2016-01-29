@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('hikesInfo');
+    return knex.schema.dropTable('hikesinfo');
 };
 
 //migrate down to undoo

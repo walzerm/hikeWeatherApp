@@ -2,7 +2,8 @@
 
 ### Project Description
 
-Make an app that gives users recommendations for local hikes in WA based on current weather conditions.
+A CRUD app, made by [Lissa Walzer](https://github.com/walzerm) and [Halah Al Shaikhly](https://github.com/HalahRaadSalih) that gives users recommendations for local hikes in WA based on current weather conditions.
+
 
 ### Who uses it
 
@@ -15,24 +16,24 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 ### Input
 
 - Location
-- Desired radius
+- Desired radius, based on zip code
 - Various desired hiking parameters
 - Day (for weather)
 
 ### Technologies
 - Javascript
+- Node.js
 - Express
+- Nightmare.js to scrape information from [Washington Trails Association](http://www.wta.org/)
+- Passport
+- PostgreSQL
+- OAuth
 - CSS
 - HTML
 - Bootstrap
-- Nightmare js
-- Passport
-- postgres
 - knex
-- oAuth
 - [Weather API](http://openweathermap.org/api)
-- Zip code API (https://www.zipcodeapi.com/)
-- [Latitude and Longitude to zip code converter](https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding)
+- [Zip code API](https://www.zipcodeapi.com/)
 
 ### Features
 
@@ -40,7 +41,6 @@ List of possible hikes that uses can take, within a set location, and in "good" 
 - Create lists to save hikes
 - Save/update/delete hikes from lists
 - Enter location to get hike recommendations within a set radius
-- See extended weather forecast
 - Get linked to wta.org for detailed hike descriptions
 
 ### Wireframes
